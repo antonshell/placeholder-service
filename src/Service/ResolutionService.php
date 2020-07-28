@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Model\Resolution;
+use App\Request\ImageRequest;
 use Symfony\Component\HttpFoundation\Request;
 
 class ResolutionService
@@ -10,10 +11,10 @@ class ResolutionService
     const DEFAULT_WIDTH = 300;
     const DEFAULT_HEIGHT = 300;
 
-    public function createFromRequest(Request $request): Resolution
+    public function createFromRequest(ImageRequest $request): Resolution
     {
-        $width = $request->get('width');
-        $height = $request->get('height');
+        $width = $request->getWidth();
+        $height = $request->getHeight();
 
         if(!$width && !$height) {
             $width = self::DEFAULT_WIDTH;

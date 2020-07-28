@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Request\ImageRequest;
 use App\Service\PlaceholderGenerator;
 use App\Service\ResolutionService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -40,11 +41,15 @@ class MainController extends AbstractController
 
     public function image(Request $request): void
     {
-        $resolution = $this->resolutionService->createFromRequest($request);
-        $text = $request->get('text');
-        $colorText = $request->get('color_text', PlaceholderGenerator::COLOR_WHITE);
-        $colorBg = $request->get('color_bg', PlaceholderGenerator::COLOR_GREY);
-        $textSize = $request->get('text_size', PlaceholderGenerator::DEFAULT_TEXT_SIZE);;
-        $this->placeholderGenerator->generate((int) $resolution->getWidth(), (int) $resolution->getHeight(), $text, $textSize, $colorText, $colorBg);
+        $imageRequest = ImageRequest::create($request);
+        $resolution = $this->resolutionService->createFromRequest($imageRequest);
+        $this->placeholderGenerator->generate(
+            $resolution->getWidth(),
+            $resolution->getHeight(),
+            $imageRequest->getText(),
+            $imageRequest->getTextSize(),
+            $imageRequest->getColorText(),
+            $imageRequest->getColorBg()
+        );
     }
 }
