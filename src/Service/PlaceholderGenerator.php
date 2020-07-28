@@ -2,10 +2,12 @@
 
 namespace App\Service;
 
+use App\Model\ColorRgb;
+
 class PlaceholderGenerator
 {
     const COLOR_WHITE = 'fff';
-    const COLOR_GREY = 'aaa';
+    const COLOR_GREY = '888';
 
     const DEFAULT_TEXT_SIZE = 28;
 
@@ -27,11 +29,14 @@ class PlaceholderGenerator
         $im = imagecreatetruecolor($width, $height);
 
         // create colors
-        $white = imagecolorallocate($im, 255, 255, 255);
-        $grey = imagecolorallocate($im, 128, 128, 128);
+        $colorText = $this->hex2rgb($colorText);
+        $colorText = imagecolorallocate($im, $colorText->getRed(), $colorText->getGreen(), $colorText->getBlue());
+
+        $colorBg = $this->hex2rgb($colorBg);
+        $colorBg = imagecolorallocate($im, $colorBg->getRed(), $colorBg->getGreen(), $colorBg->getBlue());
 
         // fill image with bg color
-        imagefilledrectangle($im, 0, 0, $width - 1, $height - 1, $grey);
+        imagefilledrectangle($im, 0, 0, $width - 1, $height - 1, $colorBg);
 
         //create text
         $angle = 0;
@@ -42,11 +47,28 @@ class PlaceholderGenerator
 
         $textStartX = $width / 2 - $textWidth / 2;
         $textStartY = $height / 2 + $textHeight / 2;
-        imagettftext($im, $textSize, $angle, $textStartX, $textStartY, $white, $font, $text);
+        imagettftext($im, $textSize, $angle, $textStartX, $textStartY, $colorText, $font, $text);
 
         // create image
         imagepng($im);
         imagedestroy($im);
         exit;
+    }
+
+    private function hex2rgb(string $hex): ColorRgb
+    {
+        $hex = str_replace("#", "", $hex);
+
+        if(strlen($hex) == 3) {
+            $r = hexdec(substr($hex,0,1).substr($hex,0,1));
+            $g = hexdec(substr($hex,1,1).substr($hex,1,1));
+            $b = hexdec(substr($hex,2,1).substr($hex,2,1));
+        } else {
+            $r = hexdec(substr($hex,0,2));
+            $g = hexdec(substr($hex,2,2));
+            $b = hexdec(substr($hex,4,2));
+        }
+
+        return new ColorRgb($r, $g, $b);
     }
 }
