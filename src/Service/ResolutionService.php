@@ -7,8 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ResolutionService
 {
-    const DEFAULT_WIDTH = 150;
-    const DEFAULT_HEIGHT = 150;
+    const DEFAULT_WIDTH = 300;
+    const DEFAULT_HEIGHT = 300;
 
     public function createFromRequest(Request $request): Resolution
     {
