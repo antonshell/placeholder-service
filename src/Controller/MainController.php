@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\PlaceholderGenerator;
+use App\Service\ResolutionService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,11 +16,18 @@ class MainController extends AbstractController
      */
     private $placeholderGenerator;
 
+    /**
+     * @var ResolutionService
+     */
+    private $resolutionService;
+
     public function __construct(
-        PlaceholderGenerator $placeholderGenerator
+        PlaceholderGenerator $placeholderGenerator,
+        ResolutionService $resolutionService
     )
     {
         $this->placeholderGenerator = $placeholderGenerator;
+        $this->resolutionService = $resolutionService;
     }
 
     public function index(Request $request): Response
@@ -32,26 +40,11 @@ class MainController extends AbstractController
 
     public function image(Request $request): void
     {
-        $width = $request->get('width');
-        $height = $request->get('height');
-
-        if(!$width && !$height) {
-            $width = 150;
-            $height = 150;
-        }
-
-        if($width && !$height) {
-            $height = $width;
-        }
-
-        if($height && !$width) {
-            $width = $height;
-        }
-
+        $resolution = $this->resolutionService->createFromRequest($request);
         $text = $request->get('text');
         $colorText = $request->get('color_text', PlaceholderGenerator::COLOR_WHITE);
         $colorBg = $request->get('color_bg', PlaceholderGenerator::COLOR_GREY);
         $textSize = $request->get('text_size', PlaceholderGenerator::DEFAULT_TEXT_SIZE);;
-        $this->placeholderGenerator->generate((int) $width, (int) $height, $text, $textSize, $colorText, $colorBg);
+        $this->placeholderGenerator->generate((int) $resolution->getWidth(), (int) $resolution->getHeight(), $text, $textSize, $colorText, $colorBg);
     }
 }
