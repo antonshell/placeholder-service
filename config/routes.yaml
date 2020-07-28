@@ -3,5 +3,5 @@ index:
     controller: App\Controller\MainController::index
 
 image_resolution:
-    path: /img/{resolution}
+    path: /img
     controller: App\Controller\MainController::image
