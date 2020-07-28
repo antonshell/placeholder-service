@@ -1,3 +1,7 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+index:
+    path: /
+    controller: App\Controller\MainController::index
+
+image_resolution:
+    path: /img/{resolution}
+    controller: App\Controller\MainController::image
