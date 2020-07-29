@@ -40,12 +40,12 @@ class ImageRequest
     public static function create(Request $request): ImageRequest
     {
         $imageRequest = new ImageRequest();
-        $imageRequest->width = $request->get('width');
-        $imageRequest->height = $request->get('height');
+        $imageRequest->width = abs($request->get('width'));
+        $imageRequest->height = abs($request->get('height'));
         $imageRequest->text = $request->get('text');
         $imageRequest->colorText = $request->get('color_text', PlaceholderGenerator::COLOR_WHITE);
         $imageRequest->colorBg = $request->get('color_bg', PlaceholderGenerator::COLOR_GREY);
-        $imageRequest->textSize = $request->get('text_size', PlaceholderGenerator::DEFAULT_TEXT_SIZE);
+        $imageRequest->textSize = abs($request->get('text_size', PlaceholderGenerator::DEFAULT_TEXT_SIZE));
 
         return $imageRequest;
     }
