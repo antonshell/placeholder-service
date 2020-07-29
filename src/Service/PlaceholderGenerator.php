@@ -49,17 +49,13 @@ class PlaceholderGenerator
         $textStartY = $height / 2 + $textHeight / 2;
         imagettftext($im, $textSize, $angle, $textStartX, $textStartY, $colorText, $font, $text);
 
-        // create image - old version
-        /*header('Content-type: image/png');
-        imagepng($im);
-        imagedestroy($im);
-        exit;*/
-
+        // save image to temp folder
         $hash = md5(sprintf('%s_%s_%s_%s_%s_%s', $width, $height, $text, $textSize, $colorText, $colorBg));
         $filepath = sprintf(__DIR__ . '/../../temp/%s.png', $hash);
         imagepng($im, $filepath);
         imagedestroy($im);
 
+        // create response, remove image
         $response = $this->createResponse($filepath);
         unlink($filepath);
 
