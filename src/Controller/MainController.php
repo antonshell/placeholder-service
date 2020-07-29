@@ -39,11 +39,12 @@ class MainController extends AbstractController
         ]);
     }
 
-    public function image(Request $request): void
+    public function image(Request $request): Response
     {
         $imageRequest = ImageRequest::create($request);
         $resolution = $this->resolutionService->createFromRequest($imageRequest);
-        $this->placeholderGenerator->generate(
+
+        return $this->placeholderGenerator->generate(
             $resolution->getWidth(),
             $resolution->getHeight(),
             $imageRequest->getText(),

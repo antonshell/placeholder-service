@@ -17,4 +17,11 @@ class MainControllerTest extends WebTestCase
         $content = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals(['status' => 'ok', 'service' => 'placeholder service'], $content);
     }
+
+    public function testImage()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/img');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
 }

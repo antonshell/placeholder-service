@@ -3,6 +3,8 @@
 namespace App\Service;
 
 use App\Model\ColorRgb;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class PlaceholderGenerator
 {
@@ -18,12 +20,10 @@ class PlaceholderGenerator
         int $textSize = self::DEFAULT_TEXT_SIZE,
         string $colorText = self::COLOR_WHITE,
         string $colorBg = self::COLOR_GREY
-    ): void {
+    ): Response {
         if($text === null) {
             $text = sprintf('%sx%s', $width, $height);
         }
-
-        header('Content-type: image/png');
 
         // generate image
         $im = imagecreatetruecolor($width, $height);
@@ -49,10 +49,34 @@ class PlaceholderGenerator
         $textStartY = $height / 2 + $textHeight / 2;
         imagettftext($im, $textSize, $angle, $textStartX, $textStartY, $colorText, $font, $text);
 
-        // create image
+        // create image - old version
+        /*header('Content-type: image/png');
         imagepng($im);
         imagedestroy($im);
-        exit;
+        exit;*/
+
+        $hash = md5(sprintf('%s_%s_%s_%s_%s_%s', $width, $height, $text, $textSize, $colorText, $colorBg));
+        $filepath = sprintf(__DIR__ . '/../../temp/%s.png', $hash);
+        imagepng($im, $filepath);
+        imagedestroy($im);
+
+        $response = $this->createResponse($filepath);
+        unlink($filepath);
+
+        return $response;
+    }
+
+    private function createResponse(string $filepath): Response
+    {
+        $response = new Response();
+        $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_INLINE, 'image.png');
+        $response->headers->set('Content-Disposition', $disposition);
+        $response->headers->set('Content-Type', 'image/png');
+        $response->headers->set('Content-length', filesize($filepath));
+        $response->sendHeaders();
+        $response->setContent(file_get_contents($filepath));
+
+        return $response;
     }
 
     private function hex2rgb(string $hex): ColorRgb
