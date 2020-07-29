@@ -55,3 +55,9 @@ php -S 127.0.0.1:8000 public/index.php
 7 . Set background color
 
 [http://127.0.0.1:8000/img?color_bg=000](http://127.0.0.1:8000/img?color_bg=000)
+
+# Tests
+
+```
+php bin/phpunit
+```
