@@ -85,4 +85,4 @@ php bin/phpunit
 
 # Demo
 
-[http://placehloder.antonshell.me/img?width=500](http://placehloder.antonshell.me/img?width=500)
+[https://placeholder.antonshell.me/img?width=500](https://placeholder.antonshell.me/img?width=500)
