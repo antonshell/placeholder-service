@@ -62,6 +62,9 @@
         ],
         "test": [
             "php bin/phpunit"
+        ],
+        "cs-fixer": [
+            "vendor/bin/php-cs-fixer fix --allow-risky=yes --using-cache=no --config .php_cs.dist"
         ]
     },
     "conflict": {

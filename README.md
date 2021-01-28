@@ -106,6 +106,10 @@ docker-compose exec php-fpm composer install
 
 ![text color](https://raw.githubusercontent.com/antonshell/placeholder-service/master/resources/test_images/img_color_bg=000.png)
 
+# Demo
+
+[https://placeholder.antonshell.me/img?width=500](https://placeholder.antonshell.me/img?width=500)
+
 # Tests
 
 1 . Locall environment
@@ -120,6 +124,13 @@ composer test
 docker-compose exec php-fpm composer test
 ```
 
-# Demo
+# Codestyle
 
-[https://placeholder.antonshell.me/img?width=500](https://placeholder.antonshell.me/img?width=500)
+1 . Fix codestyle
+
+```
+composer cs-fixer src
+docker-compose exec php-fpm composer cs-fixer src
+```
+
+
