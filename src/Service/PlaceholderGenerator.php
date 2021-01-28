@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\Model\ColorRgb;
@@ -8,10 +10,10 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class PlaceholderGenerator
 {
-    const COLOR_WHITE = 'fff';
-    const COLOR_GREY = '888';
+    public const COLOR_WHITE = 'fff';
+    public const COLOR_GREY = '888';
 
-    const DEFAULT_TEXT_SIZE = 28;
+    public const DEFAULT_TEXT_SIZE = 28;
 
     public function generate(
         int $width,
@@ -21,7 +23,7 @@ class PlaceholderGenerator
         string $colorText = self::COLOR_WHITE,
         string $colorBg = self::COLOR_GREY
     ): Response {
-        if($text === null) {
+        if (null === $text) {
             $text = sprintf('%sx%s', $width, $height);
         }
 
@@ -47,7 +49,7 @@ class PlaceholderGenerator
 
         $textStartX = $width / 2 - $textWidth / 2;
         $textStartY = $height / 2 + $textHeight / 2;
-        imagettftext($im, $textSize, $angle, $textStartX, $textStartY, $colorText, $font, $text);
+        imagettftext($im, $textSize, $angle, (int) $textStartX, (int) $textStartY, $colorText, $font, $text);
 
         // save image to temp folder
         $hash = md5(sprintf('%s_%s_%s_%s_%s_%s', $width, $height, $text, $textSize, $colorText, $colorBg));
@@ -77,16 +79,16 @@ class PlaceholderGenerator
 
     private function hex2rgb(string $hex): ColorRgb
     {
-        $hex = str_replace("#", "", $hex);
+        $hex = str_replace('#', '', $hex);
 
-        if(strlen($hex) == 3) {
-            $r = hexdec(substr($hex,0,1).substr($hex,0,1));
-            $g = hexdec(substr($hex,1,1).substr($hex,1,1));
-            $b = hexdec(substr($hex,2,1).substr($hex,2,1));
+        if (3 == strlen($hex)) {
+            $r = hexdec(substr($hex, 0, 1) . substr($hex, 0, 1));
+            $g = hexdec(substr($hex, 1, 1) . substr($hex, 1, 1));
+            $b = hexdec(substr($hex, 2, 1) . substr($hex, 2, 1));
         } else {
-            $r = hexdec(substr($hex,0,2));
-            $g = hexdec(substr($hex,2,2));
-            $b = hexdec(substr($hex,4,2));
+            $r = hexdec(substr($hex, 0, 2));
+            $g = hexdec(substr($hex, 2, 2));
+            $b = hexdec(substr($hex, 4, 2));
         }
 
         return new ColorRgb($r, $g, $b);

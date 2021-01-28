@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Request\ImageRequest;
@@ -25,8 +27,7 @@ class MainController extends AbstractController
     public function __construct(
         PlaceholderGenerator $placeholderGenerator,
         ResolutionService $resolutionService
-    )
-    {
+    ) {
         $this->placeholderGenerator = $placeholderGenerator;
         $this->resolutionService = $resolutionService;
     }
