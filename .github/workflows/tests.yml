@@ -7,7 +7,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php-versions: ['7.2', '7.3', '7.4', '8.0']
+        php-versions: ['7.4', '8.0']
     steps:
       # —— Setup Github actions —————————————————————————————————————————————
       # https://github.com/actions/checkout (official)
