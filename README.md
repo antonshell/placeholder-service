@@ -27,6 +27,7 @@ php -S 127.0.0.1:8000 public/index.php
 5 . Open in browser
 
 [http://127.0.0.1:8000/](http://127.0.0.1:8000/) - Healthcheck
+
 [http://127.0.0.1:8000/img](http://127.0.0.1:8000/img) - Default image
 
 # Install in docker
@@ -51,6 +52,7 @@ docker-compose exec php-fpm composer install
 4 . Open in browser
 
 [http://127.0.0.1:8000/](http://127.0.0.1:16880/) - Healthcheck
+
 [http://127.0.0.1:16880/img](http://127.0.0.1:16880/img) - Default image
 
 # Usage
