@@ -6,14 +6,15 @@
     "require": {
         "php": ">=7.2.5",
         "ext-ctype": "*",
+        "ext-gd": "*",
         "ext-iconv": "*",
+        "ext-json": "*",
+        "friendsofphp/php-cs-fixer": "^2.18",
         "symfony/console": "5.2.*",
         "symfony/dotenv": "5.2.*",
         "symfony/flex": "^1.3.1",
         "symfony/framework-bundle": "5.2.*",
-        "symfony/yaml": "5.2.*",
-        "ext-gd": "*",
-        "ext-json": "*"
+        "symfony/yaml": "5.2.*"
     },
     "require-dev": {
         "symfony/browser-kit": "5.2.*",
