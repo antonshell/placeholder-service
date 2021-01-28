@@ -1,6 +1,8 @@
 {
+    "name": "antonshell/placeholder-service",
+    "description": "There is a self hosted service for images placeholders generation",
     "type": "project",
-    "license": "proprietary",
+    "license": "BSD-3-Clause",
     "require": {
         "php": ">=7.2.5",
         "ext-ctype": "*",
