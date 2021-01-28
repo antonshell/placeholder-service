@@ -108,8 +108,16 @@ docker-compose exec php-fpm composer install
 
 # Tests
 
+1 . Locall environment
+
 ```
-php bin/phpunit
+composer test
+```
+
+2 . Docker environment
+
+```
+docker-compose exec php-fpm composer test
 ```
 
 # Demo
