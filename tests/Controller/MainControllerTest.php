@@ -54,6 +54,10 @@ class MainControllerTest extends WebTestCase
         ];
 
         $expectedFilesDir = __DIR__ . '/../../resources/test_images';
+
+        if (isset($_ENV['DOCKER_ENVIRONMENT'])) {
+            $expectedFilesDir = __DIR__ . '/../../resources/test_images_docker';
+        }
         
         $client = static::createClient();
         foreach ($configuration as $row) {

@@ -3,7 +3,7 @@
 There is a self hosted service for images placeholders generation.
 Service works similar way as [https://placeholder.com/](https://placeholder.com/), but self hosted.
 
-# Install
+# Install locally
 
 1 . Clone repository
 
@@ -23,6 +23,35 @@ composer install
 ```
 php -S 127.0.0.1:8000 public/index.php
 ```
+
+5 . Open in browser
+
+[http://127.0.0.1:8000/](http://127.0.0.1:8000/) - Healthcheck
+[http://127.0.0.1:8000/img](http://127.0.0.1:8000/img) - Default image
+
+# Install in docker
+
+1 . Clone repository
+
+```
+git clone https://github.com/antonshell/placeholder-service.git
+```
+
+2 . Run containers
+```
+docker-compose up
+```
+
+3 . Install dependencies
+
+```
+docker-compose exec php-fpm composer install
+```
+
+4 . Open in browser
+
+[http://127.0.0.1:8000/](http://127.0.0.1:16880/) - Healthcheck
+[http://127.0.0.1:16880/img](http://127.0.0.1:16880/img) - Default image
 
 # Usage
 
@@ -79,8 +108,16 @@ php -S 127.0.0.1:8000 public/index.php
 
 # Tests
 
+1 . Locall environment
+
 ```
-php bin/phpunit
+composer test
+```
+
+2 . Docker environment
+
+```
+docker-compose exec php-fpm composer test
 ```
 
 # Demo
