@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -58,7 +60,7 @@ class MainControllerTest extends WebTestCase
         if (isset($_ENV['DOCKER_ENVIRONMENT'])) {
             $expectedFilesDir = __DIR__ . '/../../resources/test_images_docker';
         }
-        
+
         $client = static::createClient();
         foreach ($configuration as $row) {
             $client->request('GET', $row['url']);
