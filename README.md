@@ -3,6 +3,10 @@
 There is a self hosted service for images placeholders generation.
 Service works similar way as [https://placeholder.com/](https://placeholder.com/), but self hosted.
 
+![SSH Deploy](https://github.com/antonshell/placeholder-service/workflows/SSH%20Deploy/badge.svg)
+![Tests](https://github.com/antonshell/placeholder-service/workflows/Tests/badge.svg?branch=master)
+![Code Coverage](https://raw.githubusercontent.com/antonshell/placeholder-service/master/.github/badges/coverage.svg)
+
 # Install locally
 
 1 . Clone repository
