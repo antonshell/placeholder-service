@@ -54,6 +54,14 @@ class MainControllerTest extends WebTestCase
                 'url' => 'http://127.0.0.1:8000/img?color_bg=000', // background color
                 'file' => 'img_color_bg=000.png',
             ],
+            [
+                'url' => 'http://127.0.0.1:8000/img?color_text=000000', // text color
+                'file' => 'img_color_text=000000.png',
+            ],
+            [
+                'url' => 'http://127.0.0.1:8000/img?color_bg=000000', // background color
+                'file' => 'img_color_bg=000000.png',
+            ],
         ];
 
         $expectedFilesDir = __DIR__ . '/../../resources/test_images';
