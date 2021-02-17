@@ -7,6 +7,8 @@ Service works similar way as [https://placeholder.com/](https://placeholder.com/
 ![Tests](https://github.com/antonshell/placeholder-service/workflows/Tests/badge.svg?branch=master)
 ![Code Coverage](https://raw.githubusercontent.com/antonshell/placeholder-service/master/.github/badges/coverage.svg)
 
+Full code coverage report: [http://files.antonshell.me/github-actions/placeholder-service/master/coverage/](http://files.antonshell.me/github-actions/placeholder-service/master/coverage/)
+
 # Install locally
 
 1 . Clone repository
@@ -118,16 +120,28 @@ docker-compose exec php-fpm composer install
 
 # Tests
 
-1 . Locall environment
+1 . Run tests
 
+Local environment:
 ```
 composer test
 ```
 
-2 . Docker environment
-
+Docker environment:
 ```
 docker-compose exec php-fpm composer test
+```
+
+2 . Update code coverage badges
+
+Local environment:
+```
+composer update-badges
+```
+
+Docker environment:
+```
+docker-compose exec php-fpm composer update-badges
 ```
 
 # Codestyle
