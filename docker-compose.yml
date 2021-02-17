@@ -6,6 +6,7 @@ services:
     build:
       context: ./docker/php-fpm
     environment:
+      - XDEBUG_MODE=coverage
       - DOCKER_ENVIRONMENT=true
       - APP_SECRET=${APP_SECRET}
     volumes:

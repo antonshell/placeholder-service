@@ -1,5 +1,8 @@
 FROM php:8.0-fpm
 
+RUN pecl install xdebug
+RUN docker-php-ext-enable xdebug
+
 RUN apt-get update && apt-get install -y git
 
 RUN apt-get update && apt-get install -y \

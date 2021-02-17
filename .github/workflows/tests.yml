@@ -8,6 +8,8 @@ jobs:
       fail-fast: true
       matrix:
         php-versions: ['7.4', '8.0']
+    env:
+      GA_ENVIRONMENT: true
     steps:
       # —— Setup Github actions —————————————————————————————————————————————
       # https://github.com/actions/checkout (official)
@@ -18,9 +20,9 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          coverage: none
+          coverage: xdebug
           tools: composer:v2
-          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, iconv, json, mbstring, pdo
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, iconv, json, mbstring, pdo, xdebug
         env:
           update: true
       - name: Check PHP Version
@@ -56,3 +58,40 @@ jobs:
           cp .env.ci .env
           cp phpunit.ci.xml phpunit.xml
           composer test
+      ## —— Upload tests coverage report to remote server
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      - name: Print branch name
+        shell: bash
+        run: echo ${{ steps.extract_branch.outputs.branch }}
+      - name: Create directories for reports
+        uses: appleboy/ssh-action@master
+        env:
+          BRANCH: ${{ steps.extract_branch.outputs.branch }}
+          FILES_PATH: ${{ secrets.GA_FILES_PATH }}
+        with:
+          envs: BRANCH,FILES_PATH
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          passphrase: ''
+          script: mkdir -p $FILES_PATH/$BRANCH
+      - name: Uploads reports to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          passphrase: ''
+          rm: true
+          source: "coverage"
+          target: ${{ secrets.GA_FILES_PATH }}/${{ steps.extract_branch.outputs.branch }}
+      ## —— Tests code coverage ✅check ———————————————————————————————————————————————————————————
+      - name: Check test coverage
+        id: test-coverage
+        uses: johanvanhelden/gha-clover-test-coverage-check@v1
+        with:
+          percentage: "40"
+          filename: "coverage.xml"
