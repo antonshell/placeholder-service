@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
+use Image;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class MainControllerTest extends WebTestCase
@@ -66,11 +67,20 @@ class MainControllerTest extends WebTestCase
             $client->request('GET', $row['url']);
             $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-            $expectedFilePath = sprintf('%s/%s', $expectedFilesDir, $row['file']);
-            $expectedFileHash = md5(file_get_contents($expectedFilePath));
+            // save generated image to temp directory
+            $tempImagePath = __DIR__ . '/../../temp/temp.png';
+            file_put_contents($tempImagePath, $client->getResponse()->getContent());
 
-            $contentHash = md5($client->getResponse()->getContent());
-            $this->assertEquals($expectedFileHash, $contentHash);
+            $expectedFilePath = sprintf('%s/%s', $expectedFilesDir, $row['file']);
+
+            // compare with existing image
+            $expectedImage = Image::fromFile($expectedFilePath);
+            $generatedImage = Image::fromFile($tempImagePath);
+            $equal = $expectedImage->compare($generatedImage);
+
+            $this->assertTrue($equal);
+
+            unlink($tempImagePath);
         }
     }
 }

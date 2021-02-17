@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c62628365f6bea47f3407854eb7ce57a",
+    "content-hash": "d22d90076e6ae4552b0de5c67d7ac661",
     "packages": [
         {
             "name": "composer/semver",
@@ -407,6 +407,43 @@
                 }
             ],
             "time": "2021-01-26T00:22:21+00:00"
+        },
+        {
+            "name": "inceddy/image-compare",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/inceddy/ImageCompare.git",
+                "reference": "4cbd20f25d450a38d7a631e46bed3059ed0be4fa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/inceddy/ImageCompare/zipball/4cbd20f25d450a38d7a631e46bed3059ed0be4fa",
+                "reference": "4cbd20f25d450a38d7a631e46bed3059ed0be4fa",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Philipp Steingrebe",
+                    "email": "development@steingrebe.de"
+                }
+            ],
+            "description": "micro Lib for image comparison",
+            "support": {
+                "issues": "https://github.com/inceddy/ImageCompare/issues",
+                "source": "https://github.com/inceddy/ImageCompare/tree/master"
+            },
+            "time": "2018-01-31T10:52:22+00:00"
         },
         {
             "name": "php-cs-fixer/diff",
