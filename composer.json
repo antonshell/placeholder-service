@@ -66,6 +66,9 @@
         ],
         "cs-fixer": [
             "vendor/bin/php-cs-fixer fix --allow-risky=yes --using-cache=no --config .php_cs.dist"
+        ],
+        "update-badges": [
+            "vendor/bin/php-coverage-badger coverage.xml .github/badges/coverage.svg"
         ]
     },
     "conflict": {
