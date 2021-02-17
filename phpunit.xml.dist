@@ -7,6 +7,14 @@
          colors="true"
          bootstrap="tests/bootstrap.php"
 >
+    <coverage>
+        <include>
+            <directory>./src/</directory>
+        </include>
+        <exclude>
+            <file>./src/Kernel.php</file>
+        </exclude>
+    </coverage>
     <php>
         <ini name="error_reporting" value="-1" />
         <env name="KERNEL_CLASS" value="App\Kernel"/>
