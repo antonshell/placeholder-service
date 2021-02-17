@@ -32,6 +32,9 @@
             ".php_cs.dist"
         ]
     },
+    "jaschilz/php-coverage-badger": {
+        "version": "2.0.0"
+    },
     "php": {
         "version": "7.4"
     },

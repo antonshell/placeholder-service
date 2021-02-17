@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b920559ffc030dd8084438aeed57538b",
+    "content-hash": "c62628365f6bea47f3407854eb7ce57a",
     "packages": [
         {
             "name": "composer/semver",
@@ -3230,6 +3230,47 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "jaschilz/php-coverage-badger",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JASchilz/PHPCoverageBadge.git",
+                "reference": "9def6f0c2649dc020849420e633a4819878bac03"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JASchilz/PHPCoverageBadge/zipball/9def6f0c2649dc020849420e633a4819878bac03",
+                "reference": "9def6f0c2649dc020849420e633a4819878bac03",
+                "shasum": ""
+            },
+            "bin": [
+                "bin/php-coverage-badger"
+            ],
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marco Pivetta",
+                    "email": "ocramius@gmail.com",
+                    "homepage": "http://ocramius.github.com"
+                },
+                {
+                    "name": "Joseph Schilz",
+                    "email": "joseph@schilz.org",
+                    "homepage": "https://www.schilz.org"
+                }
+            ],
+            "description": "Create a code coverage badge from a PHPUnit Clover XML file.",
+            "homepage": "https://github.com/jaschilz/PhpCoverageBadge",
+            "support": {
+                "source": "https://github.com/JASchilz/PHPCoverageBadge/tree/master"
+            },
+            "time": "2017-07-21T20:03:56+00:00"
+        },
         {
             "name": "symfony/browser-kit",
             "version": "v5.2.2",
