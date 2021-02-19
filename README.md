@@ -8,6 +8,7 @@ Service works similar way as [https://placeholder.com/](https://placeholder.com/
 ![Code Coverage](https://raw.githubusercontent.com/antonshell/placeholder-service/master/.github/badges/coverage.svg)
 
 Full code coverage report: [http://files.antonshell.me/github-actions/placeholder-service/master/coverage/](http://files.antonshell.me/github-actions/placeholder-service/master/coverage/)
+Psalm html report: [http://files.antonshell.me/github-actions/placeholder-service/master/psalm/psalm-report.html](http://files.antonshell.me/github-actions/placeholder-service/master/psalm/psalm-report.html)
 
 # Install locally
 
@@ -156,6 +157,9 @@ docker-compose exec php-fpm composer cs-fixer src
 2 . Code quality with Psalm
 
 ```
+composer psalm
+composer psalm-report-html
+
 docker-compose exec php-fpm composer psalm
 docker-compose exec php-fpm composer psalm-report-html
 ```
