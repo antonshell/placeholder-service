@@ -153,4 +153,12 @@ composer cs-fixer src
 docker-compose exec php-fpm composer cs-fixer src
 ```
 
+2 . Code quality with Psalm
+
+```
+docker-compose exec php-fpm composer psalm
+docker-compose exec php-fpm composer psalm-report-html
+```
+
+Open in browser: psalm-report.html
 

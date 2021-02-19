@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "68c2b17788223b89fc9d860a2fb1bac2",
+    "content-hash": "1401806e2a607d6dfee198205734855f",
     "packages": [
         {
             "name": "composer/semver",
@@ -3996,6 +3996,38 @@
                 "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.4.0"
             },
             "time": "2020-09-17T18:55:26+00:00"
+        },
+        {
+            "name": "roave/psalm-html-output",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Roave/psalm-html-output.git",
+                "reference": "118e71ad8f5eb6e20d4ce3170f48b58fed5b4736"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Roave/psalm-html-output/zipball/118e71ad8f5eb6e20d4ce3170f48b58fed5b4736",
+                "reference": "118e71ad8f5eb6e20d4ce3170f48b58fed5b4736",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "James Titcumb",
+                    "email": "james@asgrim.com"
+                }
+            ],
+            "description": "Psalm HTML Output",
+            "support": {
+                "issues": "https://github.com/Roave/psalm-html-output/issues",
+                "source": "https://github.com/Roave/psalm-html-output/tree/1.0.x"
+            },
+            "time": "2020-09-07T14:28:29+00:00"
         },
         {
             "name": "sebastian/diff",

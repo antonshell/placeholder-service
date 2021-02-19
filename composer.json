@@ -20,6 +20,7 @@
     },
     "require-dev": {
         "jaschilz/php-coverage-badger": "^2.0",
+        "roave/psalm-html-output": "^1.0",
         "symfony/browser-kit": "5.2.*",
         "symfony/css-selector": "5.2.*",
         "symfony/phpunit-bridge": "^5.2",
@@ -68,6 +69,12 @@
         ],
         "cs-fixer": [
             "vendor/bin/php-cs-fixer fix --allow-risky=yes --using-cache=no --config .php_cs.dist"
+        ],
+        "psalm": [
+            "vendor/bin/psalm --report=checkstyle.xml"
+        ],
+        "psalm-report-html": [
+            "vendor/bin/psalm --output-format=xml | xsltproc vendor/roave/psalm-html-output/psalm-html-output.xsl - > psalm-report.html"
         ],
         "update-badges": [
             "vendor/bin/php-coverage-badger coverage.xml .github/badges/coverage.svg"
