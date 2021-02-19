@@ -8,6 +8,7 @@ Service works similar way as [https://placeholder.com/](https://placeholder.com/
 ![Code Coverage](https://raw.githubusercontent.com/antonshell/placeholder-service/master/.github/badges/coverage.svg)
 
 Full code coverage report: [http://files.antonshell.me/github-actions/placeholder-service/master/coverage/](http://files.antonshell.me/github-actions/placeholder-service/master/coverage/)
+
 Psalm html report: [http://files.antonshell.me/github-actions/placeholder-service/master/psalm/psalm-report.html](http://files.antonshell.me/github-actions/placeholder-service/master/psalm/psalm-report.html)
 
 # Install locally
