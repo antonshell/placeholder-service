@@ -1,0 +1,74 @@
+name: Psalm code static analysis checks
+on: [push]
+jobs:
+  psalm-code-static-analysis:
+    runs-on: ubuntu-20.04
+    steps:
+      # —— Setup Github actions 🐙 —————————————————————————————————————————————
+      # https://github.com/actions/checkout (official)
+      - name: Git checkout antonshell.me
+        uses: actions/checkout@v2
+      # https://github.com/shivammathur/setup-php (community)
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.0
+          tools: composer:v2
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, iconv, json, mbstring, pdo, xdebug
+        env:
+          update: true
+      - name: Check PHP Version
+        run: php -v
+      # —— Composer 🧙‍️ —————————————————————————————————————————————————————————
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Cache composer dependencies
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+      - name: Install Composer dependencies
+        run: composer install
+      # —— Install xsltproc (needed for psalm html report)
+      - name: Install xsltproc
+        run: sudo apt install -y xsltproc
+      # —— Generate psalm html report
+      - name: Generate psalm html report
+        run: composer psalm-report-html
+      # —— Upload psalm html report to remote server
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      - name: Print branch name
+        shell: bash
+        run: echo ${{ steps.extract_branch.outputs.branch }}
+      - name: Create directories for reports
+        uses: appleboy/ssh-action@master
+        env:
+          BRANCH: ${{ steps.extract_branch.outputs.branch }}
+          FILES_PATH: ${{ secrets.GA_FILES_PATH }}
+        with:
+          envs: BRANCH,FILES_PATH
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          passphrase: ''
+          script: mkdir -p $FILES_PATH/$BRANCH/psalm
+      - name: Uploads reports to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          passphrase: ''
+          rm: true
+          source: "psalm-report.html"
+          target: ${{ secrets.GA_FILES_PATH }}/${{ steps.extract_branch.outputs.branch }}/psalm
+      # —— Generate psalm
+      #- name: Run psalm
+      #  run: composer psalm
