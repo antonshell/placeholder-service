@@ -16,7 +16,7 @@ jobs:
         uses: mshick/add-pr-comment@v1
         with:
           message: |
-            Test coverage report: [http://files.antonshell.me/github-actions/placeholder-service/${{ steps.extract_branch.outputs.branch }}/coverage/](http://files.antonshell.me/github-actions/placeholder-service/${{ steps.extract_branch.outputs.branch }}/coverage/)
+            Test coverage report: [http://files.antonshell.me/github-actions/placeholder-service/${{ steps.extract_branch.outputs.branch }}/coverage/coverage](http://files.antonshell.me/github-actions/placeholder-service/${{ steps.extract_branch.outputs.branch }}/coverage/coverage)
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           repo-token-user-login: 'github-actions[bot]' # The user.login for temporary GitHub tokens
           allow-repeats: false # This is the default
