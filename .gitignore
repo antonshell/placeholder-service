@@ -23,3 +23,7 @@
 
 # test coverage
 coverage.xml
+
+# psalm code quality report
+checkstyle.xml
+psalm-report.html

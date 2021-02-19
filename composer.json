@@ -22,7 +22,8 @@
         "jaschilz/php-coverage-badger": "^2.0",
         "symfony/browser-kit": "5.2.*",
         "symfony/css-selector": "5.2.*",
-        "symfony/phpunit-bridge": "^5.2"
+        "symfony/phpunit-bridge": "^5.2",
+        "vimeo/psalm": "^4.6"
     },
     "config": {
         "optimize-autoloader": true,
