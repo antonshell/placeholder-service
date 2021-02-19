@@ -3,6 +3,9 @@ FROM php:8.0-fpm
 RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
 
+# Install xsltproc for pslm html reports https://github.com/Roave/psalm-html-output
+RUN apt-get update && apt-get install -y xsltproc
+
 RUN apt-get update && apt-get install -y git
 
 RUN apt-get update && apt-get install -y \
