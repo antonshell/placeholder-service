@@ -61,6 +61,8 @@ jobs:
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           passphrase: ''
-          script: rsync -a --exclude={'var','temp'} --delete ${{ secrets.REMOTE_TARGET }} ${{ secrets.REMOTE_TARGET_DEPLOY }}
+          script: |
+            rsync -a --exclude={'var','temp'} --delete ${{ secrets.REMOTE_TARGET }} ${{ secrets.REMOTE_TARGET_DEPLOY }}
+            cd ${{ secrets.REMOTE_TARGET }} && php bin/console cache:clear
 
 
