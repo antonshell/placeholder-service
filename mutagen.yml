@@ -1,0 +1,34 @@
+sync:
+  defaults:
+    mode: "two-way-resolved"
+    flushOnCreate: true
+    ignore:
+      vcs: true
+  placeholder-service-www:
+    alpha: "./"
+    beta: "docker://placeholder-service_php_fpm_1/var/www"
+    ignore:
+      paths:
+        - ".idea"
+        - "var"
+        - "vendor"
+
+# Set up the service and any volumes before creating sessions.
+beforeCreate:
+  - docker-compose -f docker-compose.yml -f docker-compose-osx.yml up --build --detach
+
+# Set up the main services after creating sessions. At this point, sessions will
+# have been established and code pushed to the shared volume.
+# After this is done, we can start up the deployment scripts.
+afterCreate:
+  - docker-compose -f docker-compose.yml -f docker-compose-osx.yml up --build --detach
+  - docker-compose exec php-fpm composer install
+
+# Tear down all services and remove the code volume after terminating sessions.
+afterTerminate:
+  - docker-compose -f docker-compose.yml -f docker-compose-osx.yml down --remove-orphans || true
+
+
+# Define common utility commands.
+commands:
+  logs: docker-compose -f docker-compose.yml -f docker-compose-osx.yml logs --follow
