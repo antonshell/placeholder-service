@@ -1,0 +1,15 @@
+version: '3'
+services:
+  php-fpm:
+    container_name: placeholder-service_php_fpm_1
+    volumes:
+      - placeholder-service-www:/var/www
+  nginx:
+    volumes:
+      - placeholder-service-www:/var/www
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/sites/:/etc/nginx/sites-available
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d
+      - ./docker/logs:/var/log
+volumes:
+  placeholder-service-www:
