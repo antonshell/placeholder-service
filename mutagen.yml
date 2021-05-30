@@ -4,6 +4,10 @@ sync:
     flushOnCreate: true
     ignore:
       vcs: true
+    configurationBeta:
+      permissions:
+        defaultFileMode: 0666
+        defaultDirectoryMode: 0666
   placeholder-service-www:
     alpha: "./"
     beta: "docker://placeholder-service_php_fpm_1/var/www"
