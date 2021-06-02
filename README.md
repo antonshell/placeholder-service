@@ -167,3 +167,6 @@ docker-compose exec php-fpm composer psalm-report-html
 
 Open in browser: psalm-report.html
 
+# Setup xdebug (Docker)
+
+[https://blog.denisbondar.com/post/phpstorm_docker_xdebug](https://blog.denisbondar.com/post/phpstorm_docker_xdebug)
