@@ -20,6 +20,8 @@ RUN apt-get install -y \
         zip \
   && docker-php-ext-install zip
 
+COPY ./php.ini /usr/local/etc/php/
+
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 RUN usermod -u 1000 www-data

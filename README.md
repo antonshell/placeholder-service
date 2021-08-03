@@ -194,3 +194,7 @@ Disable permission tracking:
 ```
 git config core.fileMode false
 ```
+
+# Setup xdebug (Docker)
+
+[https://blog.denisbondar.com/post/phpstorm_docker_xdebug](https://blog.denisbondar.com/post/phpstorm_docker_xdebug)
