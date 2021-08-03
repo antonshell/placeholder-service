@@ -167,6 +167,34 @@ docker-compose exec php-fpm composer psalm-report-html
 
 Open in browser: psalm-report.html
 
+# Macos docker environment(Mutagen)
+
+1 . Install mutagen
+
+```
+brew install mutagen-io/mutagen/mutagen
+mutagen daemon start
+```
+
+2 . Run containers
+
+```
+docker-compose down --remove-orphans || true
+mutagen project start || mutagen project terminate
+```
+
+3 . Troubleshooting:
+
+Fix permissions:
+```
+docker-compose exec php-fpm chmod -R 777 /var/www
+```
+
+Disable permission tracking:
+```
+git config core.fileMode false
+```
+
 # Setup xdebug (Docker)
 
 [https://blog.denisbondar.com/post/phpstorm_docker_xdebug](https://blog.denisbondar.com/post/phpstorm_docker_xdebug)

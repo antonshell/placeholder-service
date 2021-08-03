@@ -27,3 +27,6 @@ coverage.xml
 # psalm code quality report
 checkstyle.xml
 psalm-report.html
+
+# mutagen (docker macos env)
+mutagen.yml.lock

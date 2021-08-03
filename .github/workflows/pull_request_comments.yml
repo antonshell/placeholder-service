@@ -24,7 +24,7 @@ jobs:
         uses: mshick/add-pr-comment@v1
         with:
           message: |
-              salm static analysis report: [http://files.antonshell.me/github-actions/placeholder-service/${{ steps.extract_branch.outputs.branch }}/psalm/psalm-report.html](http://files.antonshell.me/github-actions/placeholder-service/${{ steps.extract_branch.outputs.branch }}/psalm/psalm-report.html)
+              Psalm static analysis report: [http://files.antonshell.me/github-actions/placeholder-service/${{ steps.extract_branch.outputs.branch }}/psalm/psalm-report.html](http://files.antonshell.me/github-actions/placeholder-service/${{ steps.extract_branch.outputs.branch }}/psalm/psalm-report.html)
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           repo-token-user-login: 'github-actions[bot]' # The user.login for temporary GitHub tokens
           allow-repeats: false # This is the default
