@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
+use App\Helper\PathHelper;
 use Image;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -24,10 +25,10 @@ class MainControllerTest extends WebTestCase
      */
     public function testImage(string $url, string $file): void
     {
-        $expectedFilesDir = __DIR__ . '/../../resources/test_images';
+        $expectedFilesDir = PathHelper::getBasePath() . '/resources/test_images';
 
         if (isset($_ENV['DOCKER_ENVIRONMENT']) || isset($_ENV['GA_ENVIRONMENT'])) {
-            $expectedFilesDir = __DIR__ . '/../../resources/test_images_docker';
+            $expectedFilesDir = PathHelper::getBasePath() . '/resources/test_images_docker';
         }
 
         $client = static::createClient();
@@ -36,7 +37,7 @@ class MainControllerTest extends WebTestCase
         self::assertEquals(200, $client->getResponse()->getStatusCode());
 
         // save generated image to temp directory
-        $tempImagePath = __DIR__ . '/../../temp/temp.png';
+        $tempImagePath = PathHelper::getBasePath() . '/temp/temp.png';
         file_put_contents($tempImagePath, $client->getResponse()->getContent());
 
         $expectedFilePath = sprintf('%s/%s', $expectedFilesDir, $file);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Helper\PathHelper;
 use App\Model\ColorRgb;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -42,7 +43,7 @@ class PlaceholderGenerator
 
         //create text
         $angle = 0;
-        $font = __DIR__ . '/../../resources/fonts/ArialRegular.ttf';
+        $font = PathHelper::getBasePath() . '/resources/fonts/ArialRegular.ttf';
         $points = imagettfbbox($textSize, $angle, $font, $text);
         $textWidth = abs($points[2]);
         $textHeight = abs($points[5]);
@@ -53,7 +54,7 @@ class PlaceholderGenerator
 
         // save image to temp folder
         $hash = md5(sprintf('%s_%s_%s_%s_%s_%s', $width, $height, $text, $textSize, $colorText, $colorBg));
-        $filepath = sprintf(__DIR__ . '/../../temp/%s.png', $hash);
+        $filepath = sprintf(PathHelper::getBasePath() . '/temp/%s.png', $hash);
         imagepng($im, $filepath);
         imagedestroy($im);
 
