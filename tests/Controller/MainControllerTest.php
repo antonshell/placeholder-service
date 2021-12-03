@@ -9,17 +9,17 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class MainControllerTest extends WebTestCase
 {
-    public function testIndex()
+    public function testIndex(): void
     {
         $client = static::createClient();
         $client->request('GET', '/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertEquals(200, $client->getResponse()->getStatusCode());
 
         $content = json_decode($client->getResponse()->getContent(), true);
-        $this->assertEquals(['status' => 'ok', 'service' => 'placeholder service'], $content);
+        self::assertEquals(['status' => 'ok', 'service' => 'placeholder service'], $content);
     }
 
-    public function testImage()
+    public function testImage(): void
     {
         $configuration = [
             [
@@ -73,7 +73,7 @@ class MainControllerTest extends WebTestCase
         $client = static::createClient();
         foreach ($configuration as $row) {
             $client->request('GET', $row['url']);
-            $this->assertEquals(200, $client->getResponse()->getStatusCode());
+            self::assertEquals(200, $client->getResponse()->getStatusCode());
 
             // save generated image to temp directory
             $tempImagePath = __DIR__ . '/../../temp/temp.png';
@@ -86,7 +86,7 @@ class MainControllerTest extends WebTestCase
             $generatedImage = Image::fromFile($tempImagePath);
             $equal = $expectedImage->compare($generatedImage);
 
-            $this->assertTrue($equal);
+            self::assertTrue($equal);
 
             unlink($tempImagePath);
         }
