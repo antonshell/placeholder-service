@@ -70,7 +70,7 @@ class PlaceholderGenerator
         $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_INLINE, 'image.png');
         $response->headers->set('Content-Disposition', $disposition);
         $response->headers->set('Content-Type', 'image/png');
-        $response->headers->set('Content-length', filesize($filepath));
+        $response->headers->set('Content-length', (string) filesize($filepath));
         $response->sendHeaders();
         $response->setContent(file_get_contents($filepath));
 
