@@ -9,39 +9,16 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ImageRequest
 {
-    /**
-     * @var int|null
-     */
-    private $width;
-
-    /**
-     * @var int|null
-     */
-    private $height;
-
-    /**
-     * @var string|null
-     */
-    private $text;
-
-    /**
-     * @var int
-     */
-    private $textSize;
-
-    /**
-     * @var string
-     */
-    private $colorText;
-
-    /**
-     * @var string
-     */
-    private $colorBg;
+    private ?int $width;
+    private ?int $height;
+    private ?string $text;
+    private ?int $textSize;
+    private string $colorText;
+    private string $colorBg;
 
     public static function create(Request $request): ImageRequest
     {
-        $imageRequest = new ImageRequest();
+        $imageRequest = new self();
         $imageRequest->width = abs((int) $request->get('width'));
         $imageRequest->height = abs((int) $request->get('height'));
         $imageRequest->text = $request->get('text');
