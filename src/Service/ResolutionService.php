@@ -30,12 +30,6 @@ class ResolutionService
             $width = $height;
         }
 
-        $resolution = new Resolution();
-        $resolution
-            ->setWidth((int) $width)
-            ->setHeight((int) $height)
-        ;
-
-        return $resolution;
+        return new Resolution($width, $height);
     }
 }

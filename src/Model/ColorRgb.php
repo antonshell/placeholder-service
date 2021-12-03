@@ -6,26 +6,11 @@ namespace App\Model;
 
 class ColorRgb
 {
-    /**
-     * @var int
-     */
-    private $red;
-
-    /**
-     * @var int
-     */
-    private $green;
-
-    /**
-     * @var int
-     */
-    private $blue;
-
-    public function __construct($red, $green, $blue)
-    {
-        $this->red = $red;
-        $this->green = $green;
-        $this->blue = $blue;
+    public function __construct(
+        private int $red,
+        private int $green,
+        private int $blue
+    ) {
     }
 
     public function getRed(): int

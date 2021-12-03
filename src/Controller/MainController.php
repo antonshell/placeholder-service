@@ -14,25 +14,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MainController extends AbstractController
 {
-    /**
-     * @var PlaceholderGenerator
-     */
-    private $placeholderGenerator;
-
-    /**
-     * @var ResolutionService
-     */
-    private $resolutionService;
-
     public function __construct(
-        PlaceholderGenerator $placeholderGenerator,
-        ResolutionService $resolutionService
+        private PlaceholderGenerator $placeholderGenerator,
+        private ResolutionService $resolutionService
     ) {
-        $this->placeholderGenerator = $placeholderGenerator;
-        $this->resolutionService = $resolutionService;
     }
 
-    public function index(Request $request): Response
+    public function index(): Response
     {
         return new JsonResponse([
             'status' => 'ok',
