@@ -22,7 +22,7 @@ RUN apt-get install -y \
 
 COPY ./php.ini /usr/local/etc/php/
 
-COPY --from=composer /usr/bin/composer /usr/bin/composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN usermod -u 1000 www-data
 
