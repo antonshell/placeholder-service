@@ -17,7 +17,7 @@
         "symfony/framework-bundle": "5.2.*",
         "symfony/requirements-checker": "^2.0",
         "symfony/yaml": "5.2.*",
-        "vimeo/psalm": "4.7.2"
+        "vimeo/psalm": "4.13.1"
     },
     "require-dev": {
         "jaschilz/php-coverage-badger": "^2.0",
