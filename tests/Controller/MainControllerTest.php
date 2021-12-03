@@ -19,9 +19,41 @@ class MainControllerTest extends WebTestCase
         self::assertEquals(['status' => 'ok', 'service' => 'placeholder service'], $content);
     }
 
-    public function testImage(): void
+    /**
+     * @dataProvider imageDataProvider
+     */
+    public function testImage(string $url, string $file): void
     {
-        $configuration = [
+        $expectedFilesDir = __DIR__ . '/../../resources/test_images';
+
+        if (isset($_ENV['DOCKER_ENVIRONMENT']) || isset($_ENV['GA_ENVIRONMENT'])) {
+            $expectedFilesDir = __DIR__ . '/../../resources/test_images_docker';
+        }
+
+        $client = static::createClient();
+
+        $client->request('GET', $url);
+        self::assertEquals(200, $client->getResponse()->getStatusCode());
+
+        // save generated image to temp directory
+        $tempImagePath = __DIR__ . '/../../temp/temp.png';
+        file_put_contents($tempImagePath, $client->getResponse()->getContent());
+
+        $expectedFilePath = sprintf('%s/%s', $expectedFilesDir, $file);
+
+        // compare with existing image
+        $expectedImage = Image::fromFile($expectedFilePath);
+        $generatedImage = Image::fromFile($tempImagePath);
+        $equal = $expectedImage->compare($generatedImage);
+
+        self::assertTrue($equal);
+
+        unlink($tempImagePath);
+    }
+
+    public function imageDataProvider(): array
+    {
+        return [
             [
                 'url' => '/img', // 300x300
                 'file' => 'img.png',
@@ -63,32 +95,5 @@ class MainControllerTest extends WebTestCase
                 'file' => 'img_color_bg=000000.png',
             ],
         ];
-
-        $expectedFilesDir = __DIR__ . '/../../resources/test_images';
-
-        if (isset($_ENV['DOCKER_ENVIRONMENT']) || isset($_ENV['GA_ENVIRONMENT'])) {
-            $expectedFilesDir = __DIR__ . '/../../resources/test_images_docker';
-        }
-
-        $client = static::createClient();
-        foreach ($configuration as $row) {
-            $client->request('GET', $row['url']);
-            self::assertEquals(200, $client->getResponse()->getStatusCode());
-
-            // save generated image to temp directory
-            $tempImagePath = __DIR__ . '/../../temp/temp.png';
-            file_put_contents($tempImagePath, $client->getResponse()->getContent());
-
-            $expectedFilePath = sprintf('%s/%s', $expectedFilesDir, $row['file']);
-
-            // compare with existing image
-            $expectedImage = Image::fromFile($expectedFilePath);
-            $generatedImage = Image::fromFile($tempImagePath);
-            $equal = $expectedImage->compare($generatedImage);
-
-            self::assertTrue($equal);
-
-            unlink($tempImagePath);
-        }
     }
 }
