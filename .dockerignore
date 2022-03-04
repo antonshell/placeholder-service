@@ -1,0 +1,9 @@
+*
+!/bin
+!/config
+!/public
+!/resources
+!/src
+!/.env
+!/composer.*
+!/symfony.lock
