@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Request\ImageRequest;
+use App\Service\ImageTypeService;
 use App\Service\PlaceholderGenerator;
 use App\Service\ResolutionService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,7 +40,8 @@ class MainController extends AbstractController
             $imageRequest->getText(),
             $imageRequest->getTextSize(),
             $imageRequest->getColorText(),
-            $imageRequest->getColorBg()
+            $imageRequest->getColorBg(),
+            $imageRequest->getFormat()
         );
     }
 }
