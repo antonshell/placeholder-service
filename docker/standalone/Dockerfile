@@ -26,4 +26,4 @@ USER www-data
 
 EXPOSE 80
 
-CMD ["php", "-S", "0.0.0.0:80", "public/index.php"]
+CMD ["php", "-c", "docker/standalone/php.ini", "-S", "0.0.0.0:80", "public/index.php"]
