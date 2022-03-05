@@ -17,7 +17,7 @@ build_image:
   stage: build
   script:
     - time docker build -t ${RELEASE_IMAGE}:${RELEASE_IMAGE_VERSION} -f docker/standalone/Dockerfile .
-    - time docker tag reciphpes:${RELEASE_IMAGE_VERSION} ${RELEASE_IMAGE}:${CI_COMMIT_SHORT_SHA}
+    - time docker tag ${RELEASE_IMAGE}:${RELEASE_IMAGE_VERSION} ${RELEASE_IMAGE}:${CI_COMMIT_SHORT_SHA}
     - time docker push ${RELEASE_IMAGE}:${CI_COMMIT_SHORT_SHA}
   tags:
     - shell
