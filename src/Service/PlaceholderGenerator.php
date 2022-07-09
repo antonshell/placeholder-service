@@ -41,7 +41,7 @@ class PlaceholderGenerator
         // fill image with bg color
         imagefilledrectangle($im, 0, 0, $width - 1, $height - 1, $colorBg);
 
-        //create text
+        // create text
         $angle = 0;
         $font = PathHelper::getBasePath() . '/resources/fonts/ArialRegular.ttf';
         $points = imagettfbbox($textSize, $angle, $font, $text);
