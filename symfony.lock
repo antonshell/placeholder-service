@@ -5,9 +5,6 @@
     "amphp/byte-stream": {
         "version": "v1.8.0"
     },
-    "composer/package-versions-deprecated": {
-        "version": "1.11.99.1"
-    },
     "composer/semver": {
         "version": "3.2.4"
     },
@@ -61,9 +58,6 @@
     },
     "nikic/php-parser": {
         "version": "v4.10.4"
-    },
-    "openlss/lib-array2xml": {
-        "version": "1.0.0"
     },
     "php": {
         "version": "7.4"
@@ -271,8 +265,5 @@
     },
     "webmozart/assert": {
         "version": "1.9.1"
-    },
-    "webmozart/path-util": {
-        "version": "2.3.0"
     }
 }

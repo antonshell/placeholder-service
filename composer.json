@@ -24,7 +24,7 @@
         "symfony/css-selector": "6.0.*",
         "symfony/phpunit-bridge": "^6.0",
         "symfony/requirements-checker": "^2.0",
-        "vimeo/psalm": "4.13.1"
+        "vimeo/psalm": "^5.6"
     },
     "config": {
         "optimize-autoloader": true,
