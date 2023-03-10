@@ -4,34 +4,37 @@
     "type": "project",
     "license": "BSD-3-Clause",
     "require": {
-        "php": ">=8.0.0",
+        "php": ">=8.1.0",
         "ext-ctype": "*",
         "ext-gd": "*",
         "ext-iconv": "*",
         "ext-json": "*",
         "inceddy/image-compare": "^1.0",
-        "symfony/console": "6.0.*",
-        "symfony/dotenv": "6.0.*",
+        "symfony/console": "6.2.*",
+        "symfony/dotenv": "6.2.*",
         "symfony/flex": "^1.17.6",
-        "symfony/framework-bundle": "6.0.*",
-        "symfony/yaml": "6.0.*"
+        "symfony/framework-bundle": "6.2.*",
+        "symfony/yaml": "6.2.*"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "dev-improvement/symfony-6 as 3.3.2",
+        "friendsofphp/php-cs-fixer": "^3.14",
         "jaschilz/php-coverage-badger": "^2.0",
         "roave/psalm-html-output": "^1.0",
-        "symfony/browser-kit": "6.0.*",
-        "symfony/css-selector": "6.0.*",
-        "symfony/phpunit-bridge": "^6.0",
+        "symfony/browser-kit": "6.2.*",
+        "symfony/css-selector": "6.2.*",
+        "symfony/phpunit-bridge": "^6.2",
         "symfony/requirements-checker": "^2.0",
-        "vimeo/psalm": "4.13.1"
+        "vimeo/psalm": "^5.6"
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "symfony/flex": true
+        }
     },
     "autoload": {
         "psr-4": {
@@ -86,13 +89,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "6.0.*"
+            "require": "6.2.*"
         }
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/derrabus/PHP-CS-Fixer"
-        }
-    ]
+    }
 }

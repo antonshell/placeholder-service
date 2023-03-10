@@ -3,11 +3,11 @@ name: Tests
 on: [push]
 jobs:
   php-unit-and-functional-tests:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: true
       matrix:
-        php-versions: ['8.0']
+        php-versions: ['8.1', '8.2']
     env:
       GA_ENVIRONMENT: true
     steps:
