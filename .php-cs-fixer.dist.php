@@ -25,6 +25,7 @@ $config
         'void_return' => false,
         'phpdoc_summary' => false,
         'multiline_whitespace_before_semicolons' => ['strategy' => 'new_line_for_chained_calls'],
+        'global_namespace_import' => true,
     ])
     ->setCacheFile(__DIR__ . '/.php_cs.cache')
     ->setFinder($finder);
