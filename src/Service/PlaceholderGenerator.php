@@ -7,7 +7,7 @@ namespace App\Service;
 use App\Helper\PathHelper;
 use App\Model\ColorRgb;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PlaceholderGenerator
 {
@@ -52,30 +52,7 @@ class PlaceholderGenerator
         $textStartY = $height / 2 + $textHeight / 2;
         imagettftext($im, $textSize, $angle, (int) $textStartX, (int) $textStartY, $colorText, $font, $text);
 
-        // save image to temp folder
-        $hash = md5(sprintf('%s_%s_%s_%s_%s_%s', $width, $height, $text, $textSize, $colorText, $colorBg));
-        $filepath = sprintf(PathHelper::getBasePath() . '/temp/%s.png', $hash);
-        imagepng($im, $filepath);
-        imagedestroy($im);
-
-        // create response, remove image
-        $response = $this->createResponse($filepath);
-        unlink($filepath);
-
-        return $response;
-    }
-
-    private function createResponse(string $filepath): Response
-    {
-        $response = new Response();
-        $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_INLINE, 'image.png');
-        $response->headers->set('Content-Disposition', $disposition);
-        $response->headers->set('Content-Type', 'image/png');
-        $response->headers->set('Content-length', (string) filesize($filepath));
-        $response->sendHeaders();
-        $response->setContent(file_get_contents($filepath));
-
-        return $response;
+        return new StreamedResponse(fn () => imagepng($im), 200, ['Content-Type' => 'image/png']);
     }
 
     private function hex2rgb(string $hex): ColorRgb
