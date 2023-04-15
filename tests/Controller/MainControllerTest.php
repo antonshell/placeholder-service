@@ -38,7 +38,7 @@ class MainControllerTest extends WebTestCase
 
         // save generated image to temp directory
         $tempImagePath = PathHelper::getBasePath() . '/temp/temp.png';
-        file_put_contents($tempImagePath, $client->getResponse()->getContent());
+        file_put_contents($tempImagePath, $client->getInternalResponse()->getContent());
 
         $expectedFilePath = sprintf('%s/%s', $expectedFilesDir, $file);
 
