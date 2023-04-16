@@ -66,9 +66,9 @@ class PlaceholderGenerator
     private function getImageResponse(GdImage $image, string $format): Response
     {
         return match ($format) {
-            self::FORMAT_PNG => new StreamedResponse(fn() => imagepng($image), 200, ['Content-Type' => 'image/png']),
-            self::FORMAT_JPEG => new StreamedResponse(fn() => imagejpeg($image), 200, ['Content-Type' => 'image/jpeg']),
-            self::FORMAT_GIF => new StreamedResponse(fn() => imagegif($image), 200, ['Content-Type' => 'image/gif']),
+            self::FORMAT_PNG => new StreamedResponse(fn () => imagepng($image), 200, ['Content-Type' => 'image/png']),
+            self::FORMAT_JPEG => new StreamedResponse(fn () => imagejpeg($image), 200, ['Content-Type' => 'image/jpeg']),
+            self::FORMAT_GIF => new StreamedResponse(fn () => imagegif($image), 200, ['Content-Type' => 'image/gif']),
             default => new JsonResponse([
                 'status' => 'error',
                 'message' => sprintf('Unsupported image format requested: %s', $format),
