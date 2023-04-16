@@ -116,6 +116,20 @@ docker-compose exec php-fpm composer install
 
 ![text color](https://raw.githubusercontent.com/antonshell/placeholder-service/master/resources/test_images/img_color_bg=000.png)
 
+8 . Set format (PNG, JPEG, GIF)
+
+[http://127.0.0.1:8000/img?format=png](http://127.0.0.1:8000/img?format=png)
+
+![PNG](https://raw.githubusercontent.com/antonshell/placeholder-service/master/resources/test_images/img.png)
+
+[http://127.0.0.1:8000/img?format=jpeg](http://127.0.0.1:8000/img?format=jpeg)
+
+![JPEG](https://raw.githubusercontent.com/antonshell/placeholder-service/master/resources/test_images/img.jpeg)
+
+[http://127.0.0.1:8000/img?format=gif](http://127.0.0.1:8000/img?format=gif)
+
+![GIF](https://raw.githubusercontent.com/antonshell/placeholder-service/master/resources/test_images/img.gif)
+
 # Demo
 
 [https://placeholder.antonshell.me/img?width=500](https://placeholder.antonshell.me/img?width=500)

@@ -39,7 +39,8 @@ class MainController extends AbstractController
             $imageRequest->getText(),
             $imageRequest->getTextSize(),
             $imageRequest->getColorText(),
-            $imageRequest->getColorBg()
+            $imageRequest->getColorBg(),
+            $imageRequest->getFormat()
         );
     }
 }
