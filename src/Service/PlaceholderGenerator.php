@@ -6,6 +6,8 @@ namespace App\Service;
 
 use App\Helper\PathHelper;
 use App\Model\ColorRgb;
+use GdImage;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -16,13 +18,19 @@ class PlaceholderGenerator
 
     public const DEFAULT_TEXT_SIZE = 28;
 
+    public const FORMAT_PNG = 'png';
+    public const FORMAT_JPEG = 'jpeg';
+    public const FORMAT_GIF = 'gif';
+    public const FORMAT_SVG = 'svg';
+
     public function generate(
         int $width,
         int $height,
         ?string $text = null,
         int $textSize = self::DEFAULT_TEXT_SIZE,
         string $colorText = self::COLOR_WHITE,
-        string $colorBg = self::COLOR_GREY
+        string $colorBg = self::COLOR_GREY,
+        string $format = self::FORMAT_PNG
     ): Response {
         if (null === $text) {
             $text = sprintf('%sx%s', $width, $height);
@@ -52,7 +60,20 @@ class PlaceholderGenerator
         $textStartY = $height / 2 + $textHeight / 2;
         imagettftext($im, $textSize, $angle, (int) $textStartX, (int) $textStartY, $colorText, $font, $text);
 
-        return new StreamedResponse(fn () => imagepng($im), 200, ['Content-Type' => 'image/png']);
+        return $this->getImageResponse($im, $format);
+    }
+
+    private function getImageResponse(GdImage $image, string $format): Response
+    {
+        return match ($format) {
+            self::FORMAT_PNG => new StreamedResponse(fn() => imagepng($image), 200, ['Content-Type' => 'image/png']),
+            self::FORMAT_JPEG => new StreamedResponse(fn() => imagejpeg($image), 200, ['Content-Type' => 'image/jpeg']),
+            self::FORMAT_GIF => new StreamedResponse(fn() => imagegif($image), 200, ['Content-Type' => 'image/gif']),
+            default => new JsonResponse([
+                'status' => 'error',
+                'message' => sprintf('Unsupported image format requested: %s', $format),
+            ], Response::HTTP_BAD_REQUEST),
+        };
     }
 
     private function hex2rgb(string $hex): ColorRgb

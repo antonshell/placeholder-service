@@ -52,6 +52,17 @@ class MainControllerTest extends WebTestCase
         unlink($tempImagePath);
     }
 
+    public function testImageUnsupportedFormat(): void
+    {
+        $client = static::createClient();
+        $client->request('GET', '/img?format=svg');
+        self::assertEquals(400, $client->getResponse()->getStatusCode());
+        self::assertEquals([
+            'status' => 'error',
+            'message' => 'Unsupported image format requested: svg',
+        ], json_decode($client->getInternalResponse()->getContent(), true));
+    }
+
     public function imageDataProvider(): array
     {
         return [
@@ -94,6 +105,18 @@ class MainControllerTest extends WebTestCase
             [
                 'url' => 'http://127.0.0.1:8000/img?color_bg=000000', // background color
                 'file' => 'img_color_bg=000000.png',
+            ],
+            [
+                'url' => '/img?format=png', // png format
+                'file' => 'img.png',
+            ],
+            [
+                'url' => '/img?format=jpeg', // jpeg format
+                'file' => 'img.jpeg',
+            ],
+            [
+                'url' => '/img?format=gif', // gif format
+                'file' => 'img.gif',
             ],
         ];
     }
