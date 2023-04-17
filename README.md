@@ -1,7 +1,7 @@
 # Placeholder service
 
-There is a self hosted service for images placeholders generation.
-Service works similar way as [https://placeholder.com/](https://placeholder.com/), but self hosted.
+There is a self-hosted service for images placeholders generation.
+Service works similar way as [https://placeholder.com/](https://placeholder.com/), but self-hosted.
 
 ![SSH Deploy](https://github.com/antonshell/placeholder-service/workflows/SSH%20Deploy/badge.svg)
 ![Tests](https://github.com/antonshell/placeholder-service/workflows/Tests/badge.svg?branch=master)
@@ -10,33 +10,6 @@ Service works similar way as [https://placeholder.com/](https://placeholder.com/
 Full code coverage report: [http://files.antonshell.me/github-actions/placeholder-service/master/coverage/coverage/](http://files.antonshell.me/github-actions/placeholder-service/master/coverage/coverage/)
 
 Psalm html report: [http://files.antonshell.me/github-actions/placeholder-service/master/psalm/psalm-report.html](http://files.antonshell.me/github-actions/placeholder-service/master/psalm/psalm-report.html)
-
-# Install locally
-
-1 . Clone repository
-
-```
-git clone https://github.com/antonshell/placeholder-service.git
-```
-
-2 . Install dependencies
-
-```
-cd placeholder-service
-composer install
-```
-
-3 . Run web server
-
-```
-php -S 127.0.0.1:8000 public/index.php
-```
-
-5 . Open in browser
-
-[http://127.0.0.1:8000/](http://127.0.0.1:8000/) - Healthcheck
-
-[http://127.0.0.1:8000/img](http://127.0.0.1:8000/img) - Default image
 
 # Install in docker
 
@@ -47,7 +20,9 @@ git clone https://github.com/antonshell/placeholder-service.git
 ```
 
 2 . Run containers
+
 ```
+cd placeholder-service
 docker-compose up
 ```
 
@@ -59,80 +34,80 @@ docker-compose exec php-fpm composer install
 
 4 . Open in browser
 
-[http://127.0.0.1:8000/](http://127.0.0.1:16880/) - Healthcheck
+[http://127.0.0.1:16880/](http://127.0.0.1:16880/) - Healthcheck
 
 [http://127.0.0.1:16880/img](http://127.0.0.1:16880/img) - Default image
+
+# Demo
+
+[https://placeholder.antonshell.me/img?width=500](https://placeholder.antonshell.me/img?width=500)
 
 # Usage
 
 1 . Healthcheck
 
-[http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+[https://placeholder.antonshell.me/](https://placeholder.antonshell.me/)
 
 2 . Get default image (300x300)
 
-[http://127.0.0.1:8000/img](http://127.0.0.1:8000/img)
+[https://placeholder.antonshell.me/img](https://placeholder.antonshell.me/img)
 
 ![300x300](https://raw.githubusercontent.com/antonshell/placeholder-service/master/resources/test_images/img.png)
 
 3 . Set image size
 
 - Set width
-[http://127.0.0.1:8000/img?width=500](http://127.0.0.1:8000/img?width=500) - 500x500
+[https://placeholder.antonshell.me/img?width=500](https://placeholder.antonshell.me/img?width=500) - 500x500
 
 ![500x500](https://raw.githubusercontent.com/antonshell/placeholder-service/master/resources/test_images/img_width=500.png)
 
 - Set height
-[http://127.0.0.1:8000/img?height=400](http://127.0.0.1:8000/img?height=400) - 400x400
+[https://placeholder.antonshell.me/img?height=400](https://placeholder.antonshell.me/img?height=400) - 400x400
 
 ![400x400](https://raw.githubusercontent.com/antonshell/placeholder-service/master/resources/test_images/img_height=400.png)
 
 - Set width & height
-[http://127.0.0.1:8000/img?width=320&height=240](http://127.0.0.1:8000/img?width=320&height=240) - 320x240
+[https://placeholder.antonshell.me/img?width=320&height=240](https://placeholder.antonshell.me/img?width=320&height=240) - 320x240
 
 ![320x240](https://raw.githubusercontent.com/antonshell/placeholder-service/master/resources/test_images/img_width=320_height=240.png)
 
 4 . Set custom text
 
-[http://127.0.0.1:8000/img?text=Hello](http://127.0.0.1:8000/img?text=Hello)
+[https://placeholder.antonshell.me/img?text=Hello](https://placeholder.antonshell.me/img?text=Hello)
 
 ![custom text](https://raw.githubusercontent.com/antonshell/placeholder-service/master/resources/test_images/img_text=Hello.png)
 
 5 . Set text size (default: 28)
 
-[http://127.0.0.1:8000/img?width=800&text_size=40](http://127.0.0.1:8000/img?width=800&text_size=40)
+[https://placeholder.antonshell.me/img?width=800&text_size=40](https://placeholder.antonshell.me/img?width=800&text_size=40)
 
 ![text size](https://raw.githubusercontent.com/antonshell/placeholder-service/master/resources/test_images/img_width=800_text_size=40.png)
 
 6 . Set text color
 
-[http://127.0.0.1:8000/img?color_text=000](http://127.0.0.1:8000/img?color_text=000)
+[https://placeholder.antonshell.me/img?color_text=000](https://placeholder.antonshell.me/img?color_text=000)
 
 ![text color](https://raw.githubusercontent.com/antonshell/placeholder-service/master/resources/test_images/img_color_text=000.png)
 
 7 . Set background color
 
-[http://127.0.0.1:8000/img?color_bg=000](http://127.0.0.1:8000/img?color_bg=000)
+[https://placeholder.antonshell.me/img?color_bg=000](https://placeholder.antonshell.me/img?color_bg=000)
 
 ![text color](https://raw.githubusercontent.com/antonshell/placeholder-service/master/resources/test_images/img_color_bg=000.png)
 
 8 . Set format (PNG, JPEG, GIF)
 
-[http://127.0.0.1:8000/img?format=png](http://127.0.0.1:8000/img?format=png)
+[https://placeholder.antonshell.me/img?format=png](https://placeholder.antonshell.me/img?format=png)
 
 ![PNG](https://raw.githubusercontent.com/antonshell/placeholder-service/master/resources/test_images/img.png)
 
-[http://127.0.0.1:8000/img?format=jpeg](http://127.0.0.1:8000/img?format=jpeg)
+[https://placeholder.antonshell.me/img?format=jpeg](https://placeholder.antonshell.me/img?format=jpeg)
 
 ![JPEG](https://raw.githubusercontent.com/antonshell/placeholder-service/master/resources/test_images/img.jpeg)
 
-[http://127.0.0.1:8000/img?format=gif](http://127.0.0.1:8000/img?format=gif)
+[https://placeholder.antonshell.me/img?format=gif](https://placeholder.antonshell.me/img?format=gif)
 
 ![GIF](https://raw.githubusercontent.com/antonshell/placeholder-service/master/resources/test_images/img.gif)
-
-# Demo
-
-[https://placeholder.antonshell.me/img?width=500](https://placeholder.antonshell.me/img?width=500)
 
 # Tests
 
