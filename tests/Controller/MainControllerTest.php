@@ -27,10 +27,6 @@ class MainControllerTest extends WebTestCase
     {
         $expectedFilesDir = PathHelper::getBasePath() . '/resources/test_images';
 
-        if (isset($_ENV['DOCKER_ENVIRONMENT']) || isset($_ENV['GA_ENVIRONMENT'])) {
-            $expectedFilesDir = PathHelper::getBasePath() . '/resources/test_images_docker';
-        }
-
         $client = static::createClient();
 
         $client->request('GET', $url);

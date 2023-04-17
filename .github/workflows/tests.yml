@@ -8,8 +8,6 @@ jobs:
       fail-fast: true
       matrix:
         php-versions: ['8.1', '8.2']
-    env:
-      GA_ENVIRONMENT: true
     steps:
       # —— Setup Github actions —————————————————————————————————————————————
       # https://github.com/actions/checkout (official)

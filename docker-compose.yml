@@ -6,7 +6,6 @@ services:
     build:
       context: ./docker/php-fpm
     environment:
-      - DOCKER_ENVIRONMENT=true
       - APP_SECRET=${APP_SECRET}
       - PHP_IDE_CONFIG=serverName=Docker
     volumes:
