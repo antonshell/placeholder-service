@@ -47,9 +47,6 @@
             ".php_cs.dist"
         ]
     },
-    "inceddy/image-compare": {
-        "version": "1.0.0"
-    },
     "jaschilz/php-coverage-badger": {
         "version": "2.0.0"
     },
