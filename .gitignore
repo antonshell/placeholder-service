@@ -30,3 +30,7 @@ psalm-report.html
 
 # mutagen (docker macos env)
 mutagen.yml.lock
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
