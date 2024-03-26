@@ -83,6 +83,9 @@
         ],
         "update-badges": [
             "vendor/bin/php-coverage-badger coverage.xml .github/badges/coverage.svg"
+        ],
+        "require-checker": [
+            "php composer-require-checker.phar check --config-file=composer-require-checker.json composer.json"
         ]
     },
     "conflict": {

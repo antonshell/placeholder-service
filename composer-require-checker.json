@@ -1,0 +1,10 @@
+{
+  "symbol-whitelist": [
+    "null", "true", "false",
+    "static", "self", "parent",
+    "array", "string", "int", "float", "bool", "iterable", "callable", "void", "object", "mixed", "never",
+    "array_is_list",
+    "dirname", "explode", "is_file", "umask"
+  ],
+  "scan-files" : ["bin/*.php", "src/*.php", "public/index.php"]
+}
