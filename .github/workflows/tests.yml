@@ -51,6 +51,11 @@ jobs:
         uses: docker://oskarstark/php-cs-fixer-ga
         with:
           args: --config=.php-cs-fixer.dist.php --diff --dry-run
+      # —— Composer require checker —— (Based on this package: https://github.com/maglnet/ComposerRequireChecker)
+      - name: Run composer require checker
+        run: |
+          wget https://github.com/maglnet/ComposerRequireChecker/releases/download/4.10.0/composer-require-checker.phar
+          php composer-require-checker.phar check --config-file=$(pwd)/composer-require-checker.json composer.json
       ## —— Tests ———————————————————————————————————————————————————————————
       - name: Run functionnal and unit tests
         run: |

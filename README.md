@@ -156,6 +156,15 @@ docker-compose exec php-fpm composer psalm-report-html
 
 Open in browser: psalm-report.html
 
+# Composer require checker
+
+```
+wget https://github.com/maglnet/ComposerRequireChecker/releases/download/4.10.0/composer-require-checker.phar
+docker-compose exec php-fpm composer require-check
+```
+
+More details: [https://github.com/maglnet/ComposerRequireChecker](https://github.com/maglnet/ComposerRequireChecker)
+
 # Macos docker environment(Mutagen)
 
 1 . Install mutagen
