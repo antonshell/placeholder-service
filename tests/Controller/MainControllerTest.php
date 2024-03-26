@@ -6,6 +6,7 @@ namespace App\Tests\Controller;
 
 use App\Helper\PathHelper;
 use Image;
+use SapientPro\ImageComparator\ImageComparator;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class MainControllerTest extends WebTestCase
@@ -43,11 +44,9 @@ class MainControllerTest extends WebTestCase
         $expectedFilePath = sprintf('%s/%s', $expectedFilesDir, $file);
 
         // compare with existing image
-        $expectedImage = Image::fromFile($expectedFilePath);
-        $generatedImage = Image::fromFile($tempImagePath);
-        $equal = $expectedImage->compare($generatedImage);
-
-        self::assertTrue($equal);
+        $imageComparator = new ImageComparator();
+        $similarity = $imageComparator->compare($expectedFilePath, $tempImagePath);
+        self::assertEquals(100, $similarity);
 
         unlink($tempImagePath);
     }

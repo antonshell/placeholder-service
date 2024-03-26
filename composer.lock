@@ -4,45 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1d8804c241e58f7e1cbaf1dab1225bbe",
+    "content-hash": "aaf651ab0434857a0677f6922e59796d",
     "packages": [
-        {
-            "name": "inceddy/image-compare",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/inceddy/ImageCompare.git",
-                "reference": "4cbd20f25d450a38d7a631e46bed3059ed0be4fa"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/inceddy/ImageCompare/zipball/4cbd20f25d450a38d7a631e46bed3059ed0be4fa",
-                "reference": "4cbd20f25d450a38d7a631e46bed3059ed0be4fa",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Philipp Steingrebe",
-                    "email": "development@steingrebe.de"
-                }
-            ],
-            "description": "micro Lib for image comparison",
-            "support": {
-                "issues": "https://github.com/inceddy/ImageCompare/issues",
-                "source": "https://github.com/inceddy/ImageCompare/tree/master"
-            },
-            "time": "2018-01-31T10:52:22+00:00"
-        },
         {
             "name": "psr/cache",
             "version": "3.0.0",
@@ -244,6 +207,52 @@
                 "source": "https://github.com/php-fig/log/tree/3.0.0"
             },
             "time": "2021-07-14T16:46:02+00:00"
+        },
+        {
+            "name": "sapientpro/image-comparator",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sapientpro/image-comparator.git",
+                "reference": "19219b83f4a729e29baae2c490bb8f032cb2d0d7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sapientpro/image-comparator/zipball/19219b83f4a729e29baae2c490bb8f032cb2d0d7",
+                "reference": "19219b83f4a729e29baae2c490bb8f032cb2d0d7",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "10.0.0",
+                "squizlabs/php_codesniffer": "3.7.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SapientPro\\ImageComparator\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "SapientPro",
+                    "email": "info@sapient.pro",
+                    "homepage": "https://sapient.pro/"
+                }
+            ],
+            "description": "Compare images using PHP",
+            "support": {
+                "issues": "https://github.com/sapientpro/image-comparator/issues",
+                "source": "https://github.com/sapientpro/image-comparator/tree/v1.0.1"
+            },
+            "time": "2023-04-27T07:54:28+00:00"
         },
         {
             "name": "symfony/cache",
