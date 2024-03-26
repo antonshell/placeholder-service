@@ -63,7 +63,7 @@ class MainControllerTest extends WebTestCase
         ], json_decode($client->getInternalResponse()->getContent(), true));
     }
 
-    public function imageDataProvider(): array
+    public static function imageDataProvider(): array
     {
         return [
             [
