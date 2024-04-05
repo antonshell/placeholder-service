@@ -156,6 +156,12 @@ docker-compose exec php-fpm composer psalm-report-html
 
 Open in browser: psalm-report.html
 
+3 . Static analysis with PHPStan
+
+```
+docker-compose exec php-fpm vendor/bin/phpstan analyse
+```
+
 # Composer require checker
 
 ```
