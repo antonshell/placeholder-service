@@ -1,0 +1,11 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Access to undefined constant Symfony\\\\Component\\\\HttpFoundation\\\\Request\\:\\:HEADER_X_FORWARDED_ALL\\.$#"
+			count: 1
+			path: public/index.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Controller\\\\MainControllerTest\\:\\:imageDataProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Controller/MainControllerTest.php

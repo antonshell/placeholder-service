@@ -165,6 +165,12 @@ Open in browser: psalm-report.html
 
 Psalm html report: [http://files.antonshell.me/github-actions/placeholder-service/master/psalm/psalm-report.html](http://files.antonshell.me/github-actions/placeholder-service/master/psalm/psalm-report.html)
 
+3 . Static analysis with PHPStan
+
+```
+docker-compose exec php-fpm vendor/bin/phpstan analyse
+```
+
 # Composer require checker
 
 ```
