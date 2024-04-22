@@ -7,10 +7,6 @@ Service works similar way as [https://placeholder.com/](https://placeholder.com/
 ![Tests](https://github.com/antonshell/placeholder-service/workflows/Tests/badge.svg?branch=master)
 ![Code Coverage](https://raw.githubusercontent.com/antonshell/placeholder-service/master/.github/badges/coverage.svg)
 
-Full code coverage report: [http://files.antonshell.me/github-actions/placeholder-service/master/coverage/coverage/](http://files.antonshell.me/github-actions/placeholder-service/master/coverage/coverage/)
-
-Psalm html report: [http://files.antonshell.me/github-actions/placeholder-service/master/psalm/psalm-report.html](http://files.antonshell.me/github-actions/placeholder-service/master/psalm/psalm-report.html)
-
 # Install in docker
 
 1 . Clone repository
@@ -40,7 +36,16 @@ docker-compose exec php-fpm composer install
 
 # Demo
 
+There is a SaaS version available:
 [https://placeholder.antonshell.me/img?width=500](https://placeholder.antonshell.me/img?width=500)
+
+And also UI available:
+[https://placeholder-ui.antonshell.me/](https://placeholder-ui.antonshell.me/)
+
+![placeholder-ui](https://raw.githubusercontent.com/antonshell/placeholder-service/master/resources/ui_demo/placeholder-ui.png)
+
+There is a separate project:
+[https://github.com/antonshell/placeholder-service-ui](https://github.com/antonshell/placeholder-service-ui)
 
 # Usage
 
@@ -123,6 +128,8 @@ Docker environment:
 docker-compose exec php-fpm composer test
 ```
 
+Full code coverage report: [http://files.antonshell.me/github-actions/placeholder-service/master/coverage/coverage/](http://files.antonshell.me/github-actions/placeholder-service/master/coverage/coverage/)
+
 2 . Update code coverage badges
 
 Local environment:
@@ -155,6 +162,8 @@ docker-compose exec php-fpm composer psalm-report-html
 ```
 
 Open in browser: psalm-report.html
+
+Psalm html report: [http://files.antonshell.me/github-actions/placeholder-service/master/psalm/psalm-report.html](http://files.antonshell.me/github-actions/placeholder-service/master/psalm/psalm-report.html)
 
 # Composer require checker
 
