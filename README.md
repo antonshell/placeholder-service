@@ -1,7 +1,8 @@
 # Placeholder service
 
-There is a self-hosted service for images placeholders generation.
-Service works similar way as [https://placeholder.com/](https://placeholder.com/), but self-hosted.
+There is a simple self-hosted service for images placeholders generation.
+
+[Frontend](https://placeholder-ui.antonshell.me/), [Backend](https://placeholder.antonshell.me/)
 
 ![SSH Deploy](https://github.com/antonshell/placeholder-service/workflows/SSH%20Deploy/badge.svg)
 ![Tests](https://github.com/antonshell/placeholder-service/workflows/Tests/badge.svg?branch=master)
