@@ -1,0 +1,26 @@
+name: PHPStan code static analysis
+on: [push]
+jobs:
+  phpstan-code-static-analysis:
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: true
+      matrix:
+        php-versions: ['8.2', '8.3']
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          tools: composer:v2
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, iconv, json, mbstring, pdo, xdebug
+        env:
+          update: true
+      - name: Check PHP Version
+        run: php -v
+      - name: Install Composer dependencies
+        run: composer install
+      - name: Run phpstan
+        run: vendor/bin/phpstan analyse
