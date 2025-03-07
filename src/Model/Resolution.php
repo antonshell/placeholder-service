@@ -8,7 +8,7 @@ class Resolution
 {
     public function __construct(
         private int $width,
-        private int $height
+        private int $height,
     ) {
     }
 

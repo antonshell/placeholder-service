@@ -9,7 +9,7 @@ class ColorRgb
     public function __construct(
         private int $red,
         private int $green,
-        private int $blue
+        private int $blue,
     ) {
     }
 
