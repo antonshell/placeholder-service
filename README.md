@@ -13,20 +13,20 @@ There is a simple self-hosted service for images placeholders generation.
 1 . Clone repository
 
 ```
-git clone https://github.com/antonshell/placeholder-service.git
+git clone git@github.com:antonshell/placeholder-service.git
 ```
 
 2 . Run containers
 
 ```
 cd placeholder-service
-docker-compose up
+docker compose up -d
 ```
 
 3 . Install dependencies
 
 ```
-docker-compose exec php-fpm composer install
+docker compose exec php-fpm composer install
 ```
 
 4 . Open in browser
@@ -126,7 +126,7 @@ composer test
 
 Docker environment:
 ```
-docker-compose exec php-fpm composer test
+docker compose exec php-fpm composer test
 ```
 
 Full code coverage report: [http://files.antonshell.me/github-actions/placeholder-service/master/coverage/coverage/](http://files.antonshell.me/github-actions/placeholder-service/master/coverage/coverage/)
@@ -140,7 +140,7 @@ composer update-badges
 
 Docker environment:
 ```
-docker-compose exec php-fpm composer update-badges
+docker compose exec php-fpm composer update-badges
 ```
 
 # Codestyle
@@ -149,7 +149,7 @@ docker-compose exec php-fpm composer update-badges
 
 ```
 composer cs-fixer src
-docker-compose exec php-fpm composer cs-fixer src
+docker compose exec php-fpm composer cs-fixer src
 ```
 
 2 . Code quality with Psalm
@@ -158,8 +158,8 @@ docker-compose exec php-fpm composer cs-fixer src
 composer psalm
 composer psalm-report-html
 
-docker-compose exec php-fpm composer psalm
-docker-compose exec php-fpm composer psalm-report-html
+docker compose exec php-fpm composer psalm
+docker compose exec php-fpm composer psalm-report-html
 ```
 
 Open in browser: psalm-report.html
@@ -169,14 +169,14 @@ Psalm html report: [http://files.antonshell.me/github-actions/placeholder-servic
 3 . Static analysis with PHPStan
 
 ```
-docker-compose exec php-fpm vendor/bin/phpstan analyse
+docker compose exec php-fpm vendor/bin/phpstan analyse
 ```
 
 # Composer require checker
 
 ```
 wget https://github.com/maglnet/ComposerRequireChecker/releases/download/4.10.0/composer-require-checker.phar
-docker-compose exec php-fpm composer require-check
+docker compose exec php-fpm composer require-check
 ```
 
 More details: [https://github.com/maglnet/ComposerRequireChecker](https://github.com/maglnet/ComposerRequireChecker)
@@ -193,7 +193,7 @@ mutagen daemon start
 2 . Run containers
 
 ```
-docker-compose down --remove-orphans || true
+docker compose down --remove-orphans || true
 mutagen project start || mutagen project terminate
 ```
 
@@ -201,7 +201,7 @@ mutagen project start || mutagen project terminate
 
 Fix permissions:
 ```
-docker-compose exec php-fpm chmod -R 777 /var/www
+docker compose exec php-fpm chmod -R 777 /var/www
 ```
 
 Disable permission tracking:
