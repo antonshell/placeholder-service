@@ -16,7 +16,7 @@ class MainController extends AbstractController
 {
     public function __construct(
         private PlaceholderGenerator $placeholderGenerator,
-        private ResolutionService $resolutionService
+        private ResolutionService $resolutionService,
     ) {
     }
 

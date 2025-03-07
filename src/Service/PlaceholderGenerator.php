@@ -30,7 +30,7 @@ class PlaceholderGenerator
         int $textSize = self::DEFAULT_TEXT_SIZE,
         string $colorText = self::COLOR_WHITE,
         string $colorBg = self::COLOR_GREY,
-        string $format = self::FORMAT_PNG
+        string $format = self::FORMAT_PNG,
     ): Response {
         if (null === $text) {
             $text = sprintf('%sx%s', $width, $height);
