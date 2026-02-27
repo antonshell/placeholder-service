@@ -12,7 +12,7 @@ class ImageRequest
     private ?int $width;
     private ?int $height;
     private ?string $text;
-    private ?int $textSize;
+    private int $textSize;
     private string $colorText;
     private string $colorBg;
     private string $format;
@@ -20,8 +20,13 @@ class ImageRequest
     public static function create(Request $request): ImageRequest
     {
         $imageRequest = new self();
-        $imageRequest->width = abs((int) $request->get('width'));
-        $imageRequest->height = abs((int) $request->get('height'));
+
+        $width = $request->get('width');
+        $imageRequest->width = $width ? (int) $width : null;
+
+        $height = $request->get('height');
+        $imageRequest->height = $height ? (int) $height : null;
+
         $imageRequest->text = $request->get('text');
         $imageRequest->colorText = $request->get('color_text', PlaceholderGenerator::COLOR_WHITE);
         $imageRequest->colorBg = $request->get('color_bg', PlaceholderGenerator::COLOR_GREY);
