@@ -12,7 +12,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.4'
           coverage: none
           tools: composer:v2
           extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, iconv, json, mbstring, pdo
@@ -63,6 +63,6 @@ jobs:
           passphrase: ''
           script: |
             rsync -a --exclude={'var','temp'} --delete ${{ secrets.REMOTE_TARGET }} ${{ secrets.REMOTE_TARGET_DEPLOY }}
-            cd ${{ secrets.REMOTE_TARGET }} && php8.2 bin/console cache:clear
+            cd ${{ secrets.REMOTE_TARGET }} && php8.4 bin/console cache:clear
 
 

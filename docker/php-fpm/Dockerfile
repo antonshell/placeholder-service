@@ -1,4 +1,4 @@
-FROM php:8.3-fpm
+FROM php:8.4-fpm
 
 RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
