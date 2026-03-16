@@ -8,6 +8,7 @@ use App\Request\ImageRequest;
 use App\Service\PlaceholderGenerator;
 use App\Service\ResolutionService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +23,9 @@ class MainController extends AbstractController
 
     public function index(): Response
     {
+        $finder = new Finder();
+        $finder->files()->in(__DIR__);
+
         return new JsonResponse([
             'status' => 'ok',
             'service' => 'placeholder service',
