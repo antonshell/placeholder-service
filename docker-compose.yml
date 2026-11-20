@@ -1,34 +1,18 @@
-# Docker configuration from here: https://dev.to/martinpham/symfony-5-development-with-docker-4hj8
-version: '3'
-
+# Local development and CI tests. Production uses the `prod` target of the same Dockerfile (see deploy/compose.yml).
 services:
-  php-fpm:
+  app:
     build:
-      context: ./docker/php-fpm
+      context: .
+      target: dev
+    # run as the host user so files created in the bind mount (vendor/, var/, coverage/) are yours
+    user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
     environment:
-      - DOCKER_ENVIRONMENT=true
-      - APP_SECRET=${APP_SECRET}
-      - PHP_IDE_CONFIG=serverName=Docker
+      # coverage is needed for `composer test`; use "debug,coverage" for step debugging
+      XDEBUG_MODE: ${XDEBUG_MODE:-coverage}
+      PHP_IDE_CONFIG: serverName=Docker
+    extra_hosts:
+      - host.docker.internal:host-gateway
     volumes:
-      - ./:/var/www
-  nginx:
-    build:
-      context: ./docker/nginx
-    volumes:
-      - ./:/var/www
-      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./docker/nginx/sites/:/etc/nginx/sites-available
-      - ./docker/nginx/conf.d/:/etc/nginx/conf.d
-      - ./docker/logs:/var/log
-    depends_on:
-      - php-fpm
+      - ./:/app
     ports:
-      - "16880:80"
-      - "16843:443"
-networks:
-  internal:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 192.168.220.0/28
+      - "16880:8080"

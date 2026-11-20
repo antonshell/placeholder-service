@@ -1,0 +1,256 @@
+name: CI
+
+# lint, audit and tests run on every push.
+# On main: the image is built in parallel, and deploy runs only when lint, tests and build
+# are green (audit only reports, it never blocks).
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  # ———————————————————————————————————————————————————————————————————————————
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+          tools: composer:v2
+          extensions: mbstring, xml, ctype, iconv, dom, filter, gd, json
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-php8.3-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-php8.3-composer-
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --no-progress
+
+      - name: PHP-CS-Fixer
+        run: vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --diff --dry-run
+
+      - name: PHPStan
+        run: vendor/bin/phpstan analyse --no-progress --error-format=github
+
+      # Informational for now (as before): there are known errors to fix, they show up as annotations
+      - name: Psalm
+        continue-on-error: true
+        run: vendor/bin/psalm --no-progress --output-format=github
+
+      - name: Composer require checker
+        run: composer require-checker
+
+  # ———————————————————————————————————————————————————————————————————————————
+  # Known vulnerabilities in dependencies. Reads only the lock file — nothing is installed.
+  # Informational: findings are reported as warnings (annotation + job summary) but never block
+  # merging or deploy — advisories often appear before a fixed version exists.
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+          tools: composer:v2
+
+      - name: Composer audit
+        id: composer-audit
+        continue-on-error: true
+        run: composer audit --locked
+
+      - name: Report findings
+        if: steps.composer-audit.outcome == 'failure'
+        run: |
+          echo "::warning title=composer audit::Known vulnerabilities in composer dependencies, see the audit job log"
+          echo "⚠️ **composer audit** found known vulnerabilities — see the log of the corresponding step." >> "$GITHUB_STEP_SUMMARY"
+
+  # ———————————————————————————————————————————————————————————————————————————
+  # Tests run in the dev image (same PHP, GD and FreeType as production): generated images are
+  # compared pixel by pixel with resources/test_images_docker. Same command as locally.
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v4
+
+      - name: Run containers as the runner user
+        run: |
+          echo "HOST_UID=$(id -u)" >> "$GITHUB_ENV"
+          echo "HOST_GID=$(id -g)" >> "$GITHUB_ENV"
+
+      - name: Build the dev image
+        run: docker compose build app
+
+      - name: Install Composer dependencies
+        run: docker compose run --rm --no-deps app composer install --no-interaction --no-progress
+
+      - name: Check Symfony requirements
+        run: docker compose run --rm --no-deps app vendor/bin/requirements-checker
+
+      - name: Run functional and unit tests
+        run: docker compose run --rm --no-deps app composer test
+
+      # —— Coverage report: job summary + downloadable HTML artifact ————————
+      - name: Coverage summary
+        if: always() && hashFiles('coverage.xml') != ''
+        run: |
+          docker compose run --rm --no-deps -e GITHUB_WORKSPACE=/app app \
+            php .github/scripts/coverage-summary.php coverage.xml "Code coverage" | tee -a "$GITHUB_STEP_SUMMARY"
+          echo "Full HTML report: download the **coverage** artifact of this run." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload coverage report
+        if: always() && hashFiles('coverage.xml') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: |
+            coverage
+            coverage.xml
+          retention-days: 30
+
+      - name: Check test coverage
+        uses: johanvanhelden/gha-clover-test-coverage-check@v1
+        with:
+          percentage: "95"
+          filename: "coverage.xml"
+
+  # ———————————————————————————————————————————————————————————————————————————
+  build:
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image: ${{ steps.image.outputs.ref }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Image reference
+        id: image
+        run: echo "ref=${REGISTRY}/${IMAGE_NAME,,}:sha-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+
+      - name: Build image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: prod
+          load: true   # into the local docker daemon: smoke-tested first, pushed only if it passes
+          tags: ${{ steps.image.outputs.ref }}
+          # one image = one package version (no attestation manifests),
+          # so the retention cleanup below can't delete parts of a kept image
+          provenance: false
+          sbom: false
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Smoke test
+        run: .github/scripts/smoke-test.sh "${{ steps.image.outputs.ref }}"
+
+      - name: Push image
+        run: docker push "${{ steps.image.outputs.ref }}"
+
+  # ———————————————————————————————————————————————————————————————————————————
+  deploy:
+    if: github.ref == 'refs/heads/master'
+    needs: [lint, tests, build]   # not audit: it is informational
+    runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      contents: read
+      packages: read   # GITHUB_TOKEN is used on the server to pull the private image from GHCR
+    concurrency:
+      group: deploy-production
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Upload compose file
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          port: ${{ secrets.DEPLOY_PORT || 22 }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          source: deploy/compose.yml
+          target: ${{ secrets.DEPLOY_PATH }}
+          strip_components: 1
+
+      - name: Pull and restart
+        uses: appleboy/ssh-action@v1.2.0
+        env:
+          APP_IMAGE: ${{ needs.build.outputs.image }}
+          APP_SECRET: ${{ secrets.APP_SECRET }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+          GHCR_USER: ${{ github.actor }}
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          port: ${{ secrets.DEPLOY_PORT || 22 }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          envs: APP_IMAGE,APP_SECRET,DEPLOY_PATH,GHCR_USER,GHCR_TOKEN
+          script: |
+            set -eu
+            cd "$DEPLOY_PATH"
+            umask 077
+            printf 'APP_IMAGE=%s\nAPP_SECRET=%s\n' "$APP_IMAGE" "$APP_SECRET" > .env
+            trap 'docker logout ghcr.io >/dev/null 2>&1 || true' EXIT
+            echo "$GHCR_TOKEN" | docker login ghcr.io -u "$GHCR_USER" --password-stdin
+            docker compose pull
+            docker compose up -d --remove-orphans
+            docker image prune -f
+            healthy=no
+            for i in $(seq 1 30); do
+              [ "$(docker inspect -f '{{.State.Health.Status}}' placeholder-service)" = healthy ] && { healthy=yes; break; }
+              sleep 2
+            done
+            [ "$healthy" = yes ] || { echo "placeholder-service did not become healthy"; docker compose logs --tail=100 app; exit 1; }
+            echo "placeholder-service is healthy"
+
+  # ———————————————————————————————————————————————————————————————————————————
+  # Keep the 10 most recent images in GHCR (rollback targets), delete older ones.
+  cleanup-images:
+    needs: deploy
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - uses: actions/delete-package-versions@v5
+        with:
+          package-name: ${{ github.event.repository.name }}
+          package-type: container
+          min-versions-to-keep: 10

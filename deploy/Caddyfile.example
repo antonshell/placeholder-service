@@ -1,0 +1,11 @@
+# Append to /srv/proxy/Caddyfile (Caddy and placeholder-service share the external "web" network), then reload:
+#   cd /srv/proxy && docker compose exec caddy caddy reload --config /etc/caddy/Caddyfile
+placeholder.antonshell.me {
+	encode zstd gzip
+	reverse_proxy placeholder-service:8080
+}
+
+# old domain with a typo: permanent redirect to the main one
+placehloder.antonshell.me {
+	redir https://placeholder.antonshell.me{uri} permanent
+}
