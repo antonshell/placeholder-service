@@ -1,0 +1,22 @@
+# Production stack. Lives on the server in $DEPLOY_PATH together with a .env file
+# (APP_IMAGE, APP_SECRET) written by the GitHub Actions deploy job.
+name: placeholder-service
+
+services:
+  app:
+    image: ${APP_IMAGE:?APP_IMAGE is not set}
+    container_name: placeholder-service
+    restart: unless-stopped
+    environment:
+      APP_ENV: prod
+      APP_DEBUG: "0"
+      APP_SECRET: ${APP_SECRET:?APP_SECRET is not set}
+      # Behind Caddy reverse proxy: trust X-Forwarded-* from private docker networks (see public/index.php)
+      TRUSTED_PROXIES: 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+    networks:
+      - web
+
+networks:
+  web:
+    external: true
+    name: ${CADDY_NETWORK:-web}
